@@ -367,7 +367,8 @@ function make_page() {
 	var out='';
 	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'></div></div>";
 	generator="<a href='http://youknowwho.ru/dnd' class='bt'><i class='fa fa-home'></i></a>"+
-		"<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
+    "<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
+		"<a class='bt' id='addList' title='Задать список'>Задать список</a>"+
 		'<a class="bt" href="http://www.youknowwho.ru/message/?theme=dndnames" target="_blank">Написать отзыв или предложение</a>'+
 		"<a class='bt' id='info'><i class='fa fa-question-circle'></i></a>";
 
@@ -717,21 +718,78 @@ $("body").on('click', ".combo_box label", function(){
 make_dict2(names) ;
 
 $("body").on('click', "#go", function(){
-	var src = $("#selector .combo_box_title").attr("data-val");
-	var names_line = src.split(",");
-	var number = 5;
-	var table = "";
+  var src = $("#selector .combo_box_title").attr("data-val");
+  var names_line = src.split(",");
+  var number = 5;
+  var table = "";
 
-	for(var n in names_line) {
-		var race = names_line[n].trim().split(" ");
-		for(var r=0; r<number; r++) {
-			name = make_name2(names, race[0], race[1]);
-			table+="<tr><td>"+name+"</td></tr>";
-			//$("#result").append(name+"<br>");
-		}
-	}
-	table="<table align='center'>"+table+"</table>";
-	$("#result").html(table);
+  for(var n in names_line) {
+    var race = names_line[n].trim().split(" ");
+    for(var r=0; r<number; r++) {
+      name = make_name2(names, race[0], race[1]);
+      table+="<tr><td>"+name+"</td></tr>";
+      //$("#result").append(name+"<br>");
+    }
+  }
+  table="<table align='center'>"+table+"</table>";
+  $("#result").html(table);
+
+});
+$("body").on('click', "#addList", function(){
+  if($("#dbg").length>0) {
+
+  } else {
+    $("body").append("<div id='dbg'></div>");
+  }
+
+  $("#dbg").empty().fadeIn();
+  $("body").append("<div id='mod_win' class='mod_win'></div>");
+  $("#mod_win").append("<div>Введите список имен через запятую: </div><div id='textarea' contenteditable='true' style='padding: .2em; min-height: 12em; border: 1px solid #999'></div><button id='bGetList'>Применить</button>");
+});
+
+$("body").on('click', "#dbg", function(){
+  $("#dbg").fadeOut();
+  $("#mod_win").remove();
+});
+
+$("body").on('click', "#bGetList", function(){
+  // генерация
+
+  var list = $("#textarea").text();
+  var customList = {
+      "name": "customList",
+      "title": "Свой список",
+      "list": [
+        {
+          "name": "custom",
+          "title": "Свой список",
+          "schemes": [
+            "custom"
+          ],
+          "src": [
+            {
+              "name": "custom",
+              "l": list
+            }
+          ]
+        }
+      ]
+    };
+
+  if (names.l[names.l.length-1].name == 'customList') {
+    // уже есть
+    names.l[names.l.length-1] = customList;
+  } else {
+    // еще нет
+  names.l.push(customList);
+  }
+
+  var comboBox = makeComboBox(names);
+
+  $("#names").empty().append(comboBox);
+  make_dict2(names) ;
+
+  $("#dbg").click();
 
 });
 
