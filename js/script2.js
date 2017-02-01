@@ -743,20 +743,26 @@ $("body").on('click', "#addList", function(){
   }
 
   $("#dbg").empty().fadeIn();
-  $("body").append("<div id='mod_win' class='mod_win'></div>");
-  $("#mod_win").append("<div>Введите список имен через запятую: </div><div id='textarea' contenteditable='true' style='padding: .2em; min-height: 12em; border: 1px solid #999'></div><button id='bGetList'>Применить</button>");
+    if($("#mod_win").length>0) {
+		$("#mod_win").show();
+	} else {
+		$("body").append("<div id='mod_win' class='mod_win'></div>");
+		$("#mod_win").html("<div>Введите список имен через запятую: </div><div id='textarea' contenteditable='true' style='padding: .2em; min-height: 12em; border: 1px solid #999'></div><button class='bt' id='bGetList'>Применить</button>");
+	}
 });
 
 $("body").on('click', "#dbg", function(){
   $("#dbg").fadeOut();
-  $("#mod_win").remove();
+  if($("#mod_win").length>0) $("#mod_win").hide();
+  if($("#mod_win_info").length>0) $("#mod_win_info").hide();
 });
 
 $("body").on('click', "#bGetList", function(){
   // генерация
 
   var list = $("#textarea").text();
-  var customList = {
+  if (list.length>4) {
+	 var customList = {
       "name": "customList",
       "title": "Свой список",
       "list": [
@@ -776,36 +782,40 @@ $("body").on('click', "#bGetList", function(){
       ]
     };
 
-  if (names.l[names.l.length-1].name == 'customList') {
-    // уже есть
-    names.l[names.l.length-1] = customList;
-  } else {
-    // еще нет
-  names.l.push(customList);
+	  if (names.l[names.l.length-1].name == 'customList') {
+		// уже есть
+		names.l[names.l.length-1] = customList;
+	  } else {
+		// еще нет
+	  names.l.push(customList);
+	  }
+
+	  var comboBox = makeComboBox(names);
+
+	  $("#names").empty().append(comboBox);
+	  make_dict2(names) ;  
   }
-
-  var comboBox = makeComboBox(names);
-
-  $("#names").empty().append(comboBox);
-  make_dict2(names) ;
-
+ 
   $("#dbg").click();
 
 });
 
 $("body").on('click', "#info", function(){
 	if($("#dbg").length>0) {
+	} else {
+		$("body").append("<div id='dbg'></div>");
+	}
 
-  } else {
-    $("body").append("<div id='dbg'></div>");
-  }
-
-  var win_text = "<p>Выберите расу (или несколько, при желании) и нажмите кнопку 'Сгенерировать' в верхней панели. Для каждой выбранной расы сгенерируется 5 имен.</p>"+
-  "<p>Также можно генерировать имена на основе собственного списка примеров. Для этого необходимо нажать кнопку 'Задать список' в верхней панели и ввести в открывшемся окне список имен через запятую. После добавления, в списке рас появится еще один пункт (внизу). Если выбрать его и нажать кнопку 'Сгенерировать', будут сгенерированы 5 имен по образцу введенных ранее. В качестве примера для генерации лучше вводить не менее 50 имен.</p>"+
-  "<p>GitHub: <a href='https://github.com/Etignis/Names_Generator'>https://github.com/Etignis/Names_Generator</a></p>";
-  $("#dbg").empty().fadeIn();
-  $("body").append("<div id='mod_win' class='mod_win'></div>");
-  $("#mod_win").append(win_text);
+	var win_text = "<p>Выберите расу (или несколько, при желании) и нажмите кнопку 'Сгенерировать' в верхней панели. Для каждой выбранной расы сгенерируется 5 имен.</p>"+
+	"<p>Также можно генерировать имена на основе собственного списка примеров. Для этого необходимо нажать кнопку 'Задать список' в верхней панели и ввести в открывшемся окне список имен через запятую. После добавления, в списке рас появится еще один пункт (внизу). Если выбрать его и нажать кнопку 'Сгенерировать', будут сгенерированы 5 имен по образцу введенных ранее. В качестве примера для генерации лучше вводить не менее 50 имен.</p>"+
+	"<p>GitHub: <a href='https://github.com/Etignis/Names_Generator'>https://github.com/Etignis/Names_Generator</a></p>";
+	$("#dbg").empty().fadeIn();
+	if($("#mod_win_info").length>0) {
+		$("#mod_win_info").show();
+	} else {
+		$("body").html("<div id='mod_win_info' class='mod_win'></div>");
+		$("#mod_win_info").html(win_text);
+	}
 });
 
 });
