@@ -813,7 +813,7 @@ $("body").on('click', "#info", function(){
 	if($("#mod_win_info").length>0) {
 		$("#mod_win_info").show();
 	} else {
-		$("body").html("<div id='mod_win_info' class='mod_win'></div>");
+		$("body").append("<div id='mod_win_info' class='mod_win'></div>");
 		$("#mod_win_info").html(win_text);
 	}
 });
