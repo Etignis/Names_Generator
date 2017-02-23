@@ -366,10 +366,10 @@ function make_page() {
 
 	var out='';
 	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'></div></div>";
-	generator="<a href='http://youknowwho.ru/dnd' class='bt'><i class='fa fa-home'></i></a>"+
+	generator="<a href='/' class='bt'><i class='fa fa-home'></i></a>"+
     "<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
 		"<a class='bt' id='addList' title='Задать список'>Задать список</a>"+
-		'<a class="bt" href="http://www.youknowwho.ru/message/?theme=dndnames" target="_blank">Написать отзыв или предложение</a>'+
+		'<a class="bt" href="/message/?theme=dndnames" target="_blank">Написать отзыв или предложение</a>'+
 		"<a class='bt' id='info'><i class='fa fa-question-circle'></i></a>";
 
   $('body').html("<div id='panel'>"+generator+"</div>"+out)
