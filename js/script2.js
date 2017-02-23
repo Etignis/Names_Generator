@@ -1,3 +1,42 @@
+
+	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
+	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
+
+function getViewPortSize(mod)
+{
+    var viewportwidth;
+    var viewportheight;
+
+    //Standards compliant browsers (mozilla/netscape/opera/IE7)
+    if (typeof window.innerWidth != 'undefined')
+    {
+        viewportwidth = window.innerWidth,
+        viewportheight = window.innerHeight
+    }
+
+    // IE6
+    else if (typeof document.documentElement != 'undefined'
+    && typeof document.documentElement.clientWidth !=
+    'undefined' && document.documentElement.clientWidth != 0)
+    {
+        viewportwidth = document.documentElement.clientWidth,
+        viewportheight = document.documentElement.clientHeight
+    }
+
+    //Older IE
+    else
+    {
+        viewportwidth = document.getElementsByTagName('body')[0].clientWidth,
+        viewportheight = document.getElementsByTagName('body')[0].clientHeight
+    }
+
+	if(mod=="width")
+		return viewportwidth;
+	
+    return viewportwidth + "~" + viewportheight;
+}
+
+
 function exist(elem) {
   (elem.length>0) ? true : false;
 }
@@ -98,25 +137,21 @@ function fixName(name, format) {
 }
 function makeComboBox(src) {
 	var ret = '';
-	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
-	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
 	var arrow="<div class='combo_box_arrow'>"+ARR_UP+"</div>";
 	for (var i in src.l) {
-		//console.dir(src.l[race]);
-    var race = src.l[i];
-    if (src.l[i].list.length < 2) {
-      var sbr = race.list[0];
-      ret+="<label for='ch_"+sbr.name+"'><input type='checkbox' value='"+race.name+" "+sbr.name+"' id='ch_"+sbr.name+"'>"+sbr.title+"</label>";
-    } else {
-      ret+= "<label for='ch_"+race.name+"'><input type='checkbox' value='"+race.name+"' id='ch_"+race.name+"' data-root='"+race.name+"'>"+race.title+"</label>";
-      for(var j in race.list) {
-        var sbr = race.list[j];
-        ret+= "<label for='ch_"+sbr.name+"'><input type='checkbox' value='"+sbr.name+"' id='ch_"+sbr.name+"' data-parent='"+race.name+"'>"+sbr.title+"</label>";
-      }
-    }
-
+		var type = src.l[i];
+		if (src.l[i].list.length < 2) {
+		  var subtype = type.list[0];
+		  ret+="<label for='ch_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='root'><input type='checkbox' value='"+type.name+" "+subtype.name+"' id='ch_"+subtype.name+"'>"+subtype.title+"</label>";
+		} else {
+		  ret+= "<label for='ch_"+type.name+"' data-bg='"+type.bg+"' data-hierarchy='root'><input type='checkbox' value='"+type.name+"' id='ch_"+type.name+"' data-root='"+type.name+"'>"+type.title+"</label>";
+		  for(var j in type.list) {
+			var subtype = type.list[j];
+			ret+= "<label for='ch_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='child'><input type='checkbox' value='"+subtype.name+"' id='ch_"+subtype.name+"' data-parent='"+type.name+"'>"+subtype.title+"</label>";
+		  }
+		}
 	}
-	ret = "<div id='selector' class='combo_box' data-text='Выберите расу'><div class='combo_box_title'>Выберите расу</div><div class='combo_box_content'>"+ret+"</div>"+arrow+"</div>";
+	ret = "<div id='selector' class='combo_box' data-text='Выберите список'><div class='combo_box_title'>Выберите список</div><div class='combo_box_content'>"+ret+"</div>"+arrow+"</div>";
 	//$("body").html(ret);
 	return ret;
 }
@@ -372,7 +407,13 @@ function make_page() {
 		'<a class="bt" href="/message/?theme=dndnames" target="_blank">Написать отзыв или предложение</a>'+
 		"<a class='bt' id='info'><i class='fa fa-question-circle'></i></a>";
 
-  $('body').html("<div id='panel'>"+generator+"</div>"+out)
+  $('body').html("<div id='panel'>"+generator+"</div>"+out);
+  
+    if(getViewPortSize("width") > 450) {
+	  var pre_bg = "<div id='pre_bg' style='display: none'><img src='img/bg_custom.png'><img src='img/bg_effects.png'><img src='img/bg_loot.png'><img src='img/bg_magic.png'><img src='img/bg_maps.png'><img src='img/bg_tressure.png'><img src='img/bg_encounters.png'></div>";
+	  
+	  $('body').append(pre_bg);
+  }
 }
 $(window).load(function(){
 
@@ -598,15 +639,18 @@ $("body").on('click', ".combo_box_title, .combo_box_arrow", function(){
 			el.next(".combo_box_arrow").html(ARR_UP);
 		}
 	});
-$("body").on('click', ".combo_box label", function(){
+	
+// get item
+function onSelectItemPress(src) {
 	var d_root='', d_parent='', trig=true;
-	d_root = $(this).find("input[type=checkbox]").attr("data-root");
-	d_parent = $(this).find("input[type=checkbox]").attr("data-parent");
-	if($(this).find("input[type=checkbox]").prop("checked"))
+	
+	d_root = src.find("input[type=checkbox]").attr("data-root");
+	d_parent = src.find("input[type=checkbox]").attr("data-parent");
+	if(src.find("input[type=checkbox]").prop("checked"))
 		{
 		trig=false;
 		}
-	$(this).find("input[type=checkbox]").prop("checked", trig);
+	src.find("input[type=checkbox]").prop("checked", trig);
 	/**/
 	if(d_root!='' && d_root!=undefined)
 	{
@@ -707,10 +751,42 @@ $("body").on('click', ".combo_box label", function(){
 		});
 
 		if($(".combo_box_title").html()=='')
-			$(".combo_box_title").html($(this).closest(".combo_box").attr('data-text'));
+			$(".combo_box_title").html(src.closest(".combo_box").attr('data-text'));
 
-		// data-parent="human"
 	/**/
+	
+	
+	// bg
+	
+	//var fChecked = $(this).find("input:checked").length>0? true: false;
+	//var bg = $(this).attr("data-bg");
+	var bg = $("#selector").find("label[data-bg] input:checked").eq(0).parent().attr("data-bg");
+	var leng = $("#selector").find("label[data-bg] input:checked").length;
+	$("#selector").find("label[data-bg] input:checked").each(function(){
+		if ($(this).parent().attr("data-bg") != bg){
+			leng = 0;
+		}
+	});
+	if(bg && leng>0) {
+		$("body").attr("class", bg);
+	} else {
+		$("body").attr("class", "");
+	}
+		
+	// bg /
+	return false;
+}
+//TODO
+$("body").on('click', ".combo_box input", function(){
+	var checked = $(this).prop("checked");
+	$(this).prop("checked", !checked);
+	onSelectItemPress($(this).parent("label"));
+	//$(this).parent('label').click();
+	return false;
+});
+$("body").on('click', ".combo_box label", function(){
+	
+	onSelectItemPress($(this));
 	return false;
 });
 
