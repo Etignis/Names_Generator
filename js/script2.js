@@ -920,8 +920,8 @@ function make_dict2 (oNames) {
 						//[А-ЯЁа-яё]
 						// [^,;\s]
 						// [^,;\t\n\r]
-					  //if (/^([А-ЯЁ]+)|([А-ЯЁа-яё]+')/.test(tmp_s)) {
-					  if (/^([^,;\t\n\r]+)|([^,;\t\n\r]+')/.test(tmp_s)) {
+					  if (/^([А-ЯЁ]+)|([А-ЯЁа-яё]+')/.test(tmp_s)) {
+					  //if (/^([^,;\t\n\r]+)|([^,;\t\n\r]+')/.test(tmp_s)) {
 						f_s=true;
 					  }
 					  if (j==arr[i].length-depth) {
