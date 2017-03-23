@@ -206,6 +206,24 @@ td {
 th {
   font-weight: bold;
 }
+select {
+  /*
+    background: transparent;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px black;
+    padding: .2em;
+    z-index: 4;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    */
+  font-size: 100%;
+}
+select option {
+  background: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
+  text-shadow: 1px 1px 2px black;
+  padding: .7em;
+}
 #result,
 #names {
   padding: 0.4em 0;
@@ -217,6 +235,10 @@ th {
 #result th {
   background: #bbbbbb;
   color: #111111;
+}
+#result p {
+  margin: 1rem;
+  color: #bbbbbb;
 }
 #panel {
   padding-bottom: .2em;
@@ -502,6 +524,12 @@ th {
   -o-transition: color 0.3s ease-out 0;
   transition: color 0.3s ease-out 0;
 }
+.center {
+  margin: 1rem auto;
+}
+.max_width_800 {
+  max-wifth: 800px;
+}
 @media only screen and (min-width: 450px) {
   #panel button,
   #panel .bt {
@@ -518,6 +546,9 @@ th {
     margin: 0;
     float: left;
     width: 50%;
+  }
+  #result p {
+    margin: 1rem 3rem;
   }
 }
 

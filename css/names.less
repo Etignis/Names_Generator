@@ -11,6 +11,10 @@
         background: @l-gray - #222;
         color: @d-gray - #111;
     }
+    p{
+        margin: 1rem;
+        color: @l-gray - #222;
+    }
 }
 
 #panel{
@@ -195,6 +199,13 @@
     .transit(color, .3s);
 }
 
+.center{
+    margin: 1rem auto;
+}
+.max_width_800{
+    max-wifth: 800px;
+}
+
 
 @media only screen and (min-width: 450px) {	
     
@@ -217,4 +228,9 @@
         float: left;
         width: 50%;
     }    
+    #result{
+        p{
+            margin: 1rem 3rem;
+        }
+    }
 }

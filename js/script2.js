@@ -142,7 +142,7 @@ function makeComboBox(src) {
 		var type = src.l[i];
 		if (src.l[i].list.length < 2) {
 		  var subtype = type.list[0];
-		  ret+="<input type='checkbox' value='"+type.name+" "+subtype.name+"' id='ch_"+subtype.name+"'><label for='ch_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+subtype.title+"</label>";
+		  ret+="<input type='checkbox' value='"+type.name+" "+subtype.name+"' id='ch_"+type.name+"_"+subtype.name+"'><label for='ch_"+type.name+"_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+subtype.title+"</label>";
 		} else {
 		  ret+= "<input type='checkbox' value='"+type.name+"' id='ch_"+type.name+"' data-root='"+type.name+"'><label for='ch_"+type.name+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+type.title+"</label>";
 		  for(var j in type.list) {
@@ -155,7 +155,9 @@ function makeComboBox(src) {
 	//$("body").html(ret);
 	return ret;
 }
-var names = {
+
+var name_groups = {
+	names: {
 	"l": [
 		{
 			"name": "human",
@@ -393,9 +395,9 @@ var names = {
 		}
 
 	]
-};
-
-var names_dnd = {
+}
+,
+	names_dnd: {
 	"l": [
 		{
 			"name": "human",
@@ -657,7 +659,9 @@ var names_dnd = {
 				  "title": "Гномы",
 				  "schemes": [
 					"male surname nic",
-					"female surname nic"
+					"female surname nic",
+					"male male surname nic",
+					"female female surname nic"
 				  ],
 				  "src": [
 					{
@@ -730,12 +734,12 @@ var names_dnd = {
 					},
 					{
 					  "name": "nic",
-              				  "random": 2,
+              		  "random": 2,
 					  "l": "Безрассудство, Вера, Идеал, Искусство, Музыка, Мука, Надежда, Напев, Нигде, Открытость, Отчаяние, Падаль, Поиск, Почтение, Поэзия, Превосходство, Скорбь, Слава, Случайность, Страх, Усталость"
 					},
 					{
 					  "name": "surname",						
-             				  "random": 2,
+             		  "random": 2,
 					  "l": "Лафиан, Хлещехвост, Мрачнохмл, Желчебой, Цезбулан, Джеферлох, Дозмордин, Курелех, Темнопламень, Рельздехун, Грашт, Пуледиз, Армансусс, Черногонь, Вревиликус, Керевон, Офензул, Тетенбри, Чеммидон, Проклярость"
 					}
 				  ]
@@ -762,13 +766,13 @@ var names_dnd = {
 							"name": "female",
 							"l": "Ортиния, Уиннтри, Диесина, Гортрисс, Листра, Ладрейн, Тристрид, Трейка, Пинзла, Делдит, Нориан, Яртрея, Артена, Торера, Хелини, Селтенн, Рунефисс, Геселен, Доа, Нилн, Артин, Бардрин, Вистра, Гуннлода, Гурдис, Дагнал, Диеза, Илде, Катра, Кристид, Лифтраса, Мардред, Одхильд, Рисвин, Саннл, Торбера, Торгга, Фалкрунн, Финеллен, Хельджа, Хлин, Эльдет, Эмбер"
 						},
-            {
-              "name": "klan",
-              "type": "array",
-              "random": 3,
-              "prefix":  "из клана ",
-              "l": "Жестокобород, Темнокамень, Пьянокровь, Рудобой, Камнеждун, Кузнедух, Камнежуй, Рудолорд, Среброшлем, Руднеглот, Рунощерб, Огнебров, Сталеглот, Кровобород, Камнещит, Пивоног, Песнь Молота, Ковосерд, Камнешлем, Холмодав, Балдерк, Боевой Молот, Горунн, Данкил, Железный Кулак, Крепкая Наковальня, Ледяная Борода, Лодерр, Лютгер, Огненная Кузня, Рамнахейм, Стракелн, Торунн, Унгарт, Холдерхек"
-            }
+						{
+						  "name": "klan",
+						  "type": "array",
+						  "random": 3,
+						  "prefix":  "из клана ",
+						  "l": "Жестокобород, Темнокамень, Пьянокровь, Рудобой, Камнеждун, Кузнедух, Камнежуй, Рудолорд, Среброшлем, Руднеглот, Рунощерб, Огнебров, Сталеглот, Кровобород, Камнещит, Пивоног, Песнь Молота, Ковосерд, Камнешлем, Холмодав, Балдерк, Боевой Молот, Горунн, Данкил, Железный Кулак, Крепкая Наковальня, Ледяная Борода, Лодерр, Лютгер, Огненная Кузня, Рамнахейм, Стракелн, Торунн, Унгарт, Холдерхек"
+						}
 					]
 				}
 			]
@@ -804,14 +808,14 @@ var names_dnd = {
 			]
 		}
 	]
+}
+
 };
-
-
 
 function make_page() {
 
-	var comboBox = makeComboBox(names);
-
+	var comboBox = makeComboBox(name_groups.names_dnd);
+	var info_text = $("#info_text").html();
 	var select = "";
 	var arr = [
 		{
@@ -824,10 +828,10 @@ function make_page() {
 		}
 	];
 	for(var i in arr) {
-		select+="<option data-key='arr[i].name'>"+arr[i].title+"</option>"
+		select+="<option data-key='"+arr[i].name+"'>"+arr[i].title+"</option>"
 	}
-	select = "<select class='sl' id='listSelect'>"+select+"</select>"
-	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'></div></div>";
+	select = "<select class='bt' id='listSelect'>"+select+"</select>"
+	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'>"+info_text+"</div></div>";
 	generator="<a href='/' class='bt'><i class='fa fa-home'></i></a>"+
     "<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
 		select+
@@ -837,11 +841,13 @@ function make_page() {
 
   $('body').html("<div id='panel'>"+generator+"</div>"+out);
   
+	/*/
     if(getViewPortSize("width") > 450) {
 	  var pre_bg = "<div id='pre_bg' style='display: none'><img src='img/bg_custom.png'><img src='img/bg_effects.png'><img src='img/bg_loot.png'><img src='img/bg_magic.png'><img src='img/bg_maps.png'><img src='img/bg_tressure.png'><img src='img/bg_encounters.png'></div>";
 	  
 	  $('body').append(pre_bg);
-  }
+	}
+	/**/
 }
 $(window).load(function(){
 
@@ -912,7 +918,10 @@ function make_dict2 (oNames) {
 						  debugger;
 
 						//[А-ЯЁа-яё]
-					  if (/^([А-ЯЁ]+)|([А-ЯЁа-яё]+')/.test(tmp_s)) {
+						// [^,;\s]
+						// [^,;\t\n\r]
+					  //if (/^([А-ЯЁ]+)|([А-ЯЁа-яё]+')/.test(tmp_s)) {
+					  if (/^([^,;\t\n\r]+)|([^,;\t\n\r]+')/.test(tmp_s)) {
 						f_s=true;
 					  }
 					  if (j==arr[i].length-depth) {
@@ -1026,15 +1035,18 @@ function make_name2(src, race, subrace) {
 							if(source[j].name==name_arr[i]) {
                 if (source[j].random? randd(0,source[j].random)==0 : 1) {
   								word = generate_word(source[j]);
+								var re_match;
   								for ( var m=5;
-                        m>0 &&
-                        word.length<3 ||
-                        word.length<4 &&
-                        /[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]{2,}/i.test(word) ||
-    										word.length>3 &&
-    										/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]{3,}/i.test(word) ||
-                        word.match(/[УЕЫАОЭЯИЮЯ]/gi).length<2;
-                        m--
+										m>0 &&
+										word.length<3 ||
+										word.length<4 &&
+										/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]{2,}/i.test(word) ||
+    									word.length>3 &&
+    									/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]{3,}/i.test(word) ||
+										(re_match = word.match(/[УЕЫАОЭЯИЮЯ]/gi) &&
+										re_match &&
+										word.match(/[УЕЫАОЭЯИЮЯ]/gi).length<2);
+										m--
   									){
   									word = generate_word(source[j]);
   								}
@@ -1231,18 +1243,20 @@ $("body").on('click', ".combo_box label", function(){
 });
 
 // обрабатываем имена и получаем словарь
-make_dict2(names) ;
+var listName = $("#listSelect option:selected").attr("data-key");
+make_dict2(name_groups[listName]) ;
 
 $("body").on('click', "#go", function(){
   var src = $("#selector .combo_box_title").attr("data-val");
   var names_line = src.split(",");
   var number = 5;
   var table = "";
+  var listName = $("#listSelect option:selected").attr("data-key");
 
   for(var n in names_line) {
     var race = names_line[n].trim().split(" ");
     for(var r=0; r<number; r++) {
-      name = make_name2(names, race[0], race[1]);
+      name = make_name2(name_groups[listName], race[0], race[1]);
       table+="<tr><td>"+name+"</td></tr>";
       //$("#result").append(name+"<br>");
     }
@@ -1276,7 +1290,9 @@ $("body").on('click', "#dbg", function(){
 // select list of names
 $("body").on('change', '#listSelect', function(e) {
 	var listName = $("#listSelect option:selected").attr("data-key");
-	make_dict2(listName);
+	make_dict2(name_groups[listName]);
+	var comboBox = makeComboBox(name_groups[listName]);
+	$("#names").html(comboBox);
 });
 
 $("body").on('click', "#bGetList", function(){
@@ -1303,19 +1319,20 @@ $("body").on('click', "#bGetList", function(){
         }
       ]
     };
+	var listName = $("#listSelect option:selected").attr("data-key"); //name_groups[listName]
 
-	  if (names.l[names.l.length-1].name == 'customList') {
-		// уже есть
-		names.l[names.l.length-1] = customList;
-	  } else {
-		// еще нет
-	  names.l.push(customList);
-	  }
+	if (name_groups[listName].l[name_groups[listName].l.length-1].name == 'customList') {
+	// уже есть
+	name_groups[listName].l[name_groups[listName].l.length-1] = customList;
+	} else {
+	// еще нет
+	name_groups[listName].l.push(customList);
+	}
 
-	  var comboBox = makeComboBox(names);
+	var comboBox = makeComboBox(name_groups[listName]);
 
-	  $("#names").empty().append(comboBox);
-	  make_dict2(names) ;
+	$("#names").empty().append(comboBox);
+	make_dict2(name_groups[listName]) ;
   }
 
   $("#dbg").click();
