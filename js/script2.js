@@ -804,10 +804,25 @@ function make_page() {
 
 	var comboBox = makeComboBox(names);
 
-	var out='';
+	var select = "";
+	var arr = [
+		{
+			name:"names_dnd",			
+			title:"ДнД имена"
+		},
+		{			
+			name:"names",
+			title:"Специфичные имена"
+		}
+	];
+	for(var i in arr) {
+		select+="<option data-key='arr[i].name'>"+arr[i].title+"</option>"
+	}
+	select = "<select class='sl' id='listSelect'>"+select+"</select>"
 	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'></div></div>";
 	generator="<a href='/' class='bt'><i class='fa fa-home'></i></a>"+
     "<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
+		select+
 		"<a class='bt' id='addList' title='Задать список'>Задать список</a>"+
 		'<a class="bt" href="/message/?theme=dndnames" target="_blank">Написать отзыв или предложение</a>'+
 		"<a class='bt' id='info'><i class='fa fa-question-circle'></i></a>";
@@ -1248,6 +1263,12 @@ $("body").on('click', "#dbg", function(){
   $("#dbg").fadeOut();
   if($("#mod_win").length>0) $("#mod_win").hide();
   if($("#mod_win_info").length>0) $("#mod_win_info").hide();
+});
+	
+// select list of names
+$("body").on('change', '#listSelect', function(e) {
+	var listName = $("#listSelect option:selected").attr("data-key");
+	make_dict2(listName);
 });
 
 $("body").on('click', "#bGetList", function(){
