@@ -135,6 +135,35 @@ function fixName(name, format) {
   }
   return name;
 }
+function make_select(src, params) {
+  var options = "";
+  var selected_key = params.selected_key;
+  var id = params.id;
+  var atr_class = params.class;
+  var lableText;
+  var width = 0;
+  src.forEach(function(item){
+	var key = item.name;
+    var text = item.title;
+	if(text.length > width)
+		width = text.length;
+    options += "<li class='option' data-key='"+key+"'>"+text+"</li>"; 
+	if(key == selected_key){
+		lableText = text
+	}
+  });
+  width = width>20? 20: width;
+  width = width<5? 5: width;
+  width = ~~(width*0.9);
+  
+  var list = "<ul class='list'>" + options + "</ul>";
+
+  var selectedKey = selected_key; 
+  var label="<div class='label "+atr_class+"' data-selected-key='" + selectedKey + "' style='min-width:"+width+"em'>" + lableText + "</div>";
+  var select = "<div id='" + id + "' class='customSelect'>" + label + list + "</div>"
+  
+  return select;
+}
 function makeComboBox(src) {
 	var ret = '';
 	var arrow="<div class='combo_box_arrow'>"+ARR_UP+"</div>";
@@ -613,7 +642,30 @@ var name_groups = {
 					  "l": "Тёмная Тень, Речной Туман, Буревая Птица, Закатный Шёпот, Быстрая Стрела, Сверкающая Луна, Рождённый Облаком, Зовущий Волка, Песнь Ястреба, Ветер Духов, Начало Утра, Золотое Дерево, Мерцающее Солнце, Упавшая Звезда, Говорящий Ручей, Лунный Блеск, Красне Листья, Далёкий Выстрел, Мерцающая Заря, Поющая Ива, Амакиир (Сверкающий Цветок), Амастасия (Звёздный Цветок), Галанодель (Лунный Шёпот), Ильфелкиир (Сверкающий Бутон), Ксилосент (Золотой Лепесток), Лиадон (Серебряный Лист), Найло (Ночной Бриз), Сианодель (Лунный Ручей), Холимион (Алмазная Роса)"
 					}
 				  ]
-				}
+				},
+				{
+				  "name": "sea",
+				  "title": "Морские эльфы",
+				  "schemes": [
+					"male surname",
+					"female surname"
+				  ],
+				  "src": [
+					{
+					  "name": "male",
+					  "l": "Чиаркот, Вишроут, Шубм, Шлорх, Фурлу, Пефраук, Чекуан, Цефлай, Плуан, Рарррш"
+					},
+					{
+					  "name": "female",
+					  "l": " Силусс, Цалиш, Тикаэла, Линзеюн, Зеннина, Джлкин, Улл, Диньзее, Алуа, Виарти"
+					},
+					{
+					  "name": "surname",
+					  "l": " Литоари, Халио, Итуоа, Вулу, Зиалео, Фаолал, Бнеу, Уалошот"
+					}
+				  ]
+				},
+				
 			]
 		},
 		{
@@ -830,7 +882,9 @@ function make_page() {
 	for(var i in arr) {
 		select+="<option data-key='"+arr[i].name+"'>"+arr[i].title+"</option>"
 	}
-	select = "<select class='bt' id='listSelect'>"+select+"</select>"
+	select = "<select class='bt' id='listSelect'>"+select+"</select>";
+	
+	select = make_select(arr, {selected_key: "names_dnd", id: "nameListSelect", class: "bt"});
 	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'>"+info_text+"</div></div>";
 	generator="<a href='/' class='bt'><i class='fa fa-home'></i></a>"+
     "<a class='bt' id='go' title='Выберите расу' disabled>Сгенерировать</a>"+
@@ -915,7 +969,7 @@ function make_dict2 (oNames) {
 					  }
 					  
 					  if(/'/.test(tmp_s) || race.name == "customList")
-						  debugger;
+						  //debugger;
 
 						//[А-ЯЁа-яё]
 						// [^,;\s]
@@ -1243,7 +1297,7 @@ $("body").on('click', ".combo_box label", function(){
 });
 
 // обрабатываем имена и получаем словарь
-var listName = $("#listSelect option:selected").attr("data-key");
+var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
 make_dict2(name_groups[listName]) ;
 
 $("body").on('click', "#go", function(){
@@ -1251,7 +1305,7 @@ $("body").on('click', "#go", function(){
   var names_line = src.split(",");
   var number = 5;
   var table = "";
-  var listName = $("#listSelect option:selected").attr("data-key");
+  var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
 
   for(var n in names_line) {
     var race = names_line[n].trim().split(" ");
@@ -1289,11 +1343,13 @@ $("body").on('click', "#dbg", function(){
 	
 // select list of names
 $("body").on('change', '#listSelect', function(e) {
-	var listName = $("#listSelect option:selected").attr("data-key");
+	var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
 	make_dict2(name_groups[listName]);
 	var comboBox = makeComboBox(name_groups[listName]);
 	$("#names").html(comboBox);
 });
+
+
 
 $("body").on('click', "#bGetList", function(){
   // генерация
@@ -1319,7 +1375,7 @@ $("body").on('click', "#bGetList", function(){
         }
       ]
     };
-	var listName = $("#listSelect option:selected").attr("data-key"); //name_groups[listName]
+	var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key"); //name_groups[listName]
 
 	if (name_groups[listName].l[name_groups[listName].l.length-1].name == 'customList') {
 	// уже есть
@@ -1355,6 +1411,22 @@ $("body").on('click', "#info", function(){
 		$("body").append("<div id='mod_win_info' class='mod_win'></div>");
 		$("#mod_win_info").html(win_text);
 	}
+});
+
+//custom Select
+$("body").on("click", ".customSelect .label", function() {
+  $(this).next(".list").fadeToggle();
+});
+$("body").on("click", ".customSelect .option", function() {
+  var key = $(this).attr("data-key");
+  var text = $(this).text();
+  $(this).closest(".customSelect").find(".label").attr("data-selected-key", key).text(text);
+  $(this).parent("ul").fadeOut();
+  
+  var listName = key;//$("#listSelect option:selected").attr("data-key");
+	make_dict2(name_groups[listName]);
+	var comboBox = makeComboBox(name_groups[listName]);
+	$("#names").html(comboBox);
 });
 
 });
