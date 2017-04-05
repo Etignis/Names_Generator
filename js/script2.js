@@ -617,7 +617,7 @@ var name_groups = {
 			"list": [
 				{
 				  "name": "light",
-				  "title": "Эльфы",
+				  "title": "Светлые эльфы",
 				  "schemes": [
 					"child surname",
 					"male surname",
@@ -662,6 +662,39 @@ var name_groups = {
 					{
 					  "name": "surname",
 					  "l": " Литоари, Халио, Итуоа, Вулу, Зиалео, Фаолал, Бнеу, Уалошот"
+					}
+				  ]
+				},
+				{
+				  "name": "mountain",
+				  "title": "Горные эльфы",
+				  "schemes": [
+					"male prefix postfix",
+					"male surname"
+				  ],
+				  "src": [
+					{
+					  "name": "male",
+					  "l": "Аркилун, Кеддикай, Иеруша, Корза, Галик,Окари, Ахнир, Урхний, Кордук"
+					},
+					{
+					  "name": "female",
+					  "l": "Аркилун, Кеддикай, Иеруша, Корза, Галик,Окари, Ахнир, Урхний, Кордук"
+					},
+					{
+					  "name": "prefix",
+					  "type": "array",
+					  "postfix": "'",
+					  "l": "Ко, Хен, Цек,Лар, Грен, Хун, Кель,"
+					},
+					{
+					  "name": "postfix",
+					  "type": "array",
+					  "l": "рарати, дадик, тат, карум, ула, урнин, халик"
+					},
+					{
+					  "name": "surname",
+					  "l": "Зольэксил, Ксогоголь, Талаф"
 					}
 				  ]
 				},
@@ -1056,10 +1089,10 @@ function generate_word(source, oParameters) {
     var arr = shuffle(source.l.split(","));
     name = arr[0].trim();
   } else {
-  var maxLength = randd(0,4);
+	var maxLength = randd(0,4);
 	name = getFr(shuffle(source.end));
 
-  for (var q=0; q<maxLength; q++) {
+	for (var q=0; q<maxLength; q++) {
 		var tmp = "";
 		for (var w=0; w<3 && tmp.length < 1; w++){
 			sh = shuffle(source.mid);
@@ -1109,7 +1142,8 @@ function make_name2(src, race, subrace) {
 										/**/
 									}
 									var prefix = source[j].prefix? source[j].prefix : "";
-									name+= prefix+fixName(word, source[j].format)+" ";
+									var postfix = source[j].postfix? source[j].postfix : " ";
+									name+= prefix+fixName(word, source[j].format)+postfix;
 									break;
 								}
 							}
