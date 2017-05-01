@@ -175,13 +175,15 @@ function makeComboBox(src) {
 		if (src.l[i].list.length < 2) {
 		  // root
 		  var subtype = type.list[0];
-		  ret+= sectionStart+"<input type='checkbox' value='"+type.name+" "+subtype.name+"' id='ch_"+type.name+"_"+subtype.name+"'><label for='ch_"+type.name+"_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+subtype.title+"</label>"+sectionEnd;
+			var tooltip = subtype.tooltip? "title='"+subtype.tooltip+"'" : "";
+		  ret+= sectionStart+"<input type='checkbox' value='"+type.name+" "+subtype.name+"' id='ch_"+type.name+"_"+subtype.name+"'><label for='ch_"+type.name+"_"+subtype.name+"' "+tooltip+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+subtype.title+"</label>"+sectionEnd;
 		} else {
 		  // child
 		  ret+= sectionStart + minimax +"<input type='checkbox' value='"+type.name+"' id='ch_"+type.name+"' data-root='"+type.name+"'><label for='ch_"+type.name+"' data-bg='"+type.bg+"' data-hierarchy='root'>"+type.title+"</label>";
 		  for(var j in type.list) {
 			var subtype = type.list[j];
-			ret+= "<input type='checkbox' value='"+subtype.name+"' id='ch_"+subtype.name+"' data-parent='"+type.name+"'><label for='ch_"+subtype.name+"' title='"+subtype.tooltip+"' data-bg='"+type.bg+"' data-hierarchy='child'>"+subtype.title+"</label>"
+			var tooltip = subtype.tooltip? "title='"+subtype.tooltip+"'" : "";
+			ret+= "<input type='checkbox' value='"+subtype.name+"' id='ch_"+subtype.name+"' data-parent='"+type.name+"'><label for='ch_"+subtype.name+"' "+tooltip+"' data-bg='"+type.bg+"' data-hierarchy='child'>"+subtype.title+"</label>"
 		  }
 		  ret = ret+sectionEnd;
 		}
