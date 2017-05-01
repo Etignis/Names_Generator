@@ -141,6 +141,53 @@
     .combo_box_content{
         background: @l-gray;
         padding: .3em 0;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .selectSection{
+        position: relative;
+        .minimax{
+            z-index: 33;
+            top: 0;
+            right: 0;
+            @w: 1.5em;
+            position: absolute;
+            display: block;
+            width: @w;
+            height: @w;
+            font-weight: bold;
+            color: @l-gray - #222;
+            cursor: pointer;
+            overflow: hidden;
+            
+            &:before{
+                content: "";
+                font-size: 200%;
+                top: -.3em;
+                right: .2em;
+                position: absolute;
+            }
+            
+            &:hover{
+                color: @d-gray;
+            }
+        }
+        .min{
+            &:before{
+                content: "-";
+            } 
+        }
+        .max{
+            &:before{
+                content: "+";
+                font-size: 150%;
+                top: -.1em;
+                right: .2em;
+            } 
+        }
     }
 }
 
@@ -241,7 +288,7 @@
         width: 50%;
     }    
     #result{
-        p{
+        p, h1{
             margin: 1rem 3rem;
         }
     }
