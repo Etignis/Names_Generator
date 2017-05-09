@@ -2,8 +2,7 @@
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
 
-function getViewPortSize(mod)
-{
+function getViewPortSize(mod){
     var viewportwidth;
     var viewportheight;
 
@@ -45,23 +44,27 @@ function randd(min, max) {
 };
 // перемешивание
 function shuffle(o){
-    if (o.length == undefined || typeof o != 'object')
-      return [0];
-    for(var j, x, k = o.length; k; j = Math.floor(Math.random() * k), x = o[--k], o[k] = o[j], o[j] = x);
+	if (o) {
+		if ((o.length == undefined || typeof o != 'object'))
+		  return [0];
+		for(var j, x, k = o.length; k; j = Math.floor(Math.random() * k), x = o[--k], o[k] = o[j], o[j] = x);
+	}
     return o;
 };
 function getFr(a, n){
-  var tmp = a.length;
-  var ret='';
-  if (n == undefined) {
-    n = tmp>10?10:tmp/2;
-    n = n<1?1:n;
-  }
-  tmp=0;
-  for (var slog in a) {
-    ret = a[slog].fr>tmp?a[slog].slog:ret;
-  }
-  return ret;
+	if(a) {
+	  var tmp = a.length;
+	  var ret='';
+	  if (n == undefined) {
+		n = tmp>10?10:tmp/2;
+		n = n<1?1:n;
+	  }
+	  tmp=0;
+	  for (var slog in a) {
+		ret = a[slog].fr>tmp?a[slog].slog:ret;
+	  }
+	  return ret;
+	}
 }
 function getSim(slog, a, sim) {
   var ret = '';
@@ -73,7 +76,7 @@ function getSim(slog, a, sim) {
   if (sim<1)
     sim=1;
 
-  for (var i=0; i<a.length; i++) {
+  for (var i=0; i<a.length && a[i].slog && slog; i++) {
     /**/
     var sl1 = a[i].slog.substr(-sim);
     var sl2 = slog.substr(0, sim);
@@ -204,7 +207,7 @@ var name_groups = {
 						"name": "casual",
 						"title": "Обычные люди",
 						"schemes": [
-							"male surname",
+							"male nic surname castle",
 							"female surname"
 						],
 						"src": [
@@ -219,6 +222,22 @@ var name_groups = {
 							{
 								"name": "surname",
 								"l": "Гастин, Гастинг, Гастингс, Эрза, Йонг, Барлоу, Эванс, Томас, Брайтвуд, Виндривер, Лакмэн, Хелдер, Хорнрейвен, Штормвинд, Баша, Джассан, Думеин, Кхалид, Мостана, Пашар, Рейн, Дайрнина, Илтазяра, Мурнитара, Стаянога, Улмокина, Чергоба, Агосто, Асторио, Домине, Калабра, Маривальди, Писакар, Рамондо, Фалоне, Абеляр, Авад, Авалиани, Авербах, Авербух, Агилар, Агустини, Адамс, Адамчик, Адан, Адлард, Азаро, Аксар, Аксельрод, Албахари, Алегрия, Алексис, Ален, Алерамо, Аллен, Алмонд, Алон, Алон, Альбер, Альберти, Альберус, Альварес, Альваро, Альвер, Альвинг, Альдани, Альмагор, Амбра, Амери, Амио, Аммиан, Ананд, Анвари, Ангел, Андро, Арад, Аракида, Арден, Ардер, Аренс, Арент, Аретино, Аржан, Арлан, Арреола, Арриан, Арро, Арто, Артуро, Ассо, Астуриас, Атена, Атилла, Аттиль, Ахо, Аш, Ашар, Баар, Байер, Байяр, Баллард, Банвиль, Банделло, Баньян, Бар, Барбери, Барбо, Барбье, Баретти, Барри, Барт, Бартон, Бах, Бахман, Бейкер, Бейли, Бейль, Бейнс, Бембо, Бенедетти, Бентли, Бенцони, Беранже, Берент, Беркли, Бланк, Блейк, Блест, Божидар, Бренцони, Боно, Бонуар, Боон, Борд, Борель, Боско, Боярдо, Брайсон, Брайт, Бранд, Брандис, Брасс, Брентано, Бретон, Бронте, Брукс, Булль, Вайль, Валенс, Валери, Валлер, Валлериус, Валлес, Валь, Вальдес, Варго, Вассиан, Вебер, Вейль, Вейсс, Веллер, Веннер, Верт, Виалар, Виан, Видади, Видал, Виже, Визель, Вильде, Виндж, Вольф, Вуд, Вульф, Габор, Гавальдо, Гай, Галан, Галеано, Галеви, Галера, Галлант, Галло, Гамильтон, Гаммер, Гарднер, Гарленд, Гарнье, Гароди, Гауф, Гвардини, Гвиницелли, Гейер, Гейерманс, Гейм, Геккер, Геллер, Гельфанд, Генц, Герарди, Герберт, Герен, Герольд, Герт, Герц, Гесс, Гессе, Гессен, Гилельс, Гилен, Гомес, Гонкур, Гонкур, Гонсалес, Горан, Госс, Гофман, Гофф, Гоцци, Грааль-Арельский, Гранже, Грасс, Граццини, Гренье, Гренц, Грессе, Гримм, Грин, Гросс, Д’Актиль, Д’Анкона, Д’Обинье, Д’Обиньяк, Дар, Дариус, Де Вилье, Де Ла Мар, Де Лазари, Де Линт, Де Рада, Де Роберти, Дебиоль, Деборд, Делиль, Джойс, Джонс, Джонсон, Джордан, Джордано, Джордж, Джордж, Ди Прима, Ди Филиппо, Диксон, Доде, Додж, Долинго, Дон-Аминадо, Дор, Доррис, Дрейк, Дуглас, Дункан, Дюамель, Дюбуа, Дюваль, Дюпре, Жак, Жамен, Жамм, Жандр, Жане, Жарри, Жарре, Жене, Жене, Женни, Жильбер, Жуандо, Зегерс, Зима, Ивинг, Иво, Имбер, Имбриани, Инбер, Иордани, Ирвин, Ирвинг, Кавальканти, Кавана, Каллас, Калхано, Кальвейра, Кальвино, Кальдерон, Капелла, Капелли, Капеллони, Каппелло, Кардоне, Каркано, Карр, Карре, Картер, Картленд, Каскалес, Касс, Кассиани, Кастро, Като, Кахана, Кахане, Квин, Кей, Кельман, Кемаль, Кено, Кианто, Ким, Кинг, Кино, Кинтана, Кипиани, Киплинг, Кирино, Кит, Кито, Клавель, Кларк, Клаф, Кливленд, Клиффорд, Клодель, Ковальджи, Кокс, Колас, Коннели, Конон, Конради, Коньяр, Король, Коронадо, Корренти, Корсо, Корт, Корти, Корф, Кремер, Критон, Кроль, Крон, Кросс, Кьяри, Кьярини, Лавант, Лави, Лагранж, Лазар, Ламур, Ланжелан, Ланжерон, Ланн, Лануа, Ларбо, Ларра, Ларри, Ларсен, Ласкер, Лаури, Леандр, Левальд, Левант, Леконт, Леман, Лемерсье, Леметр, Лемонте, Лемуан, Лемьер, Ленц, Леопарди, Леру, Леруа, Лесс, Лессинг, Ли, Лили, Липтон, Лир, Лисарди, Лист, Лодж, Локс, Лонг, Лонс, Лоон, Лопес, Вега, Лопес, Лорд, Лоренс, Лоренцо, Лори, Лукас, Лурье, Магориан, Мадо, Мазиус, Май, Майер, Майрон, Маккарти, Маккей, Маккензи, Мальро, Мандельштам, Манджи, Мандино, Манн, Манро, Манто, Мао, Маран, Марани, Маре, Мариас, Маринетти, Марино, Марк-Мишель, Марло, Маро, Марр, Марс, Марсе, Марсель, Мартен, Марти, Мартин, Марциан, Марш, Маршак, Маршалл, Маскаро, Масс, Машаду, Меир, Мей, Мейер, Мейлер, Мелло, Мендес, Мера, Мери, Мериме, Меринг, Мерино, Меркури, Мерло, Мерри, Мерсье, Мертон, Местре, Милани, Миллер, Милли, Миллиган, Миль, Мильтон, Мирсай, Мистри, Миура, Михельсон, Модиано, Молинари, Молине, Монро, Монтанелли, Монтенегро, Монтень, Моравиа, Моралес, Моран, Моранте, Морелле, Морель, Мориц, Моррис, Мур, Мюррей, Мюссе, Мюссо, Надира, Надсон, Нарбут, Нариньяни, Нарсис, Невилл, Негри, Нерваль, Нере, Нерис, Нерсес, Нефф, Никки, Никколини, Никс, Нильсен, Ним, Ниммо, Новалис, Нолан, Нолль, Нолль, Норрис, Нортон, Ньюман, Ойербах, Оливер, Оркан, Ормандо, Ортен, Ортон, Орци, Осман, Оссиан, Остер, Остерман, Отеро, Пант, Паолини, Паркер, Парр, Парун, Пас, Патрици, Перес, Перри, Перро, Перси, Пикард, Пирс, Плат, Платен, Платт, Плесси, Полет, Полициано, Понтано, Портер, Поттер, Престон, Принцис, Пристли, Райс, Райт, Рассел, Раффи, Рахман, Рашильд, Резерфорд, Рей, Рейд, Рейн, Рембо, Ренан, Ренар, Реньяр, Ривера, Рид, Риммель, д'Аквино, Риц, Роббинс, Робер, Роберстон, Робертс, Робинсон, Роган, Родари, Рок, Рокетт, Роллан, Ролли, Роллинс, Ромер, Ромм, Росс, Россе, Россетти, Ростан, Руа, Руссо, Сабатини, Сабир, Сабо, Саверьен, Савиано, Савиньон, Савиоли, Саймон, Санд, Сартр, Сафир, Сиверс, Секст, Сен-Жорж, Сент-Аман, Сент-Олер, Сент-Экзюпери, Серафино, Сильва, Симмонс, Симон, Сирс, Смарт, Смит, Сорель, Соррентино, Спарк, Спаркс, Спациани, Старк, Стафф, Стельмах, Стерн, Стиль, Стратис, Страусс, Стросс, Строцци, Стюарт, Суарес, Сюар, Тадеос, Таро, Тассо, Тирсо, Тиссо, Тит, Тома, Томас, Томсон, Топелиус, Тор, Торелли, Торо, Торрес, Уайт, Уилсон, Унсури, Урбан, Ури, Фабер, Фабри, Фабрис, Фабрициус, Фанте, Фаст, Фейербах, Фернандес, Ферран, Феррисс, Фест, Филдинг, Фиори, Фицджеральд, Фишер, Флинн, Флинт, Флориан, Фогель, Фокс, Фонтан, Фонтенель, Фор, Форд, Форсайт, Фосс, Фоссе, Франс, Фред, Фрейн, Фрид, Хаггард, Хантер, Харрис, Харт, Хилл, Хофф, Хоффман, Черри, Шабах, Шагар, Шакир, Шамир, Шапиро, Шар, Шаррон, Шафер, Шаферан, Шафран, Шафф, Шахани, Шахар, Шахрияр, Швейцер, Шевалль, Шевалье, Шекли, Шелдон, Шелли, Шепард, Шерман, Шмидт, Шопенгауэр, Шоу, Штерн, Шульц, Шуман, Шумахер, Эванс, Эвола, Эгарт, Эланд, Эмерсон, Эрдман, Эриксон, Эрнандес, Эспиноса, Юнг, Юрис, Ян, Янг"
+							},
+							{
+								"name": "nic",
+								"type": "array",
+								"prefix": " '",
+								"postfix": "' ",
+								"random": 7,
+								"l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома"	
+							},
+							{
+								"name": "castle",
+								"prefix": " из замка ",
+								"postfix": "холл",
+								"random": 7,
+								"link": "surname",
+								"mod": "start"
 							}
 						]
 
@@ -450,7 +469,7 @@ var name_groups = {
 					"src": [
 						{
 							"name": "male",
-							"l": ") Айвор, Бор, Глэр, Григор, Иган, Козеф, Миваль, Орел, Павел, Сергор, Фодель"
+							"l": "Айвор, Бор, Глэр, Григор, Иган, Козеф, Миваль, Орел, Павел, Сергор, Фодель"
 						},
 						{
 							"name": "female",
@@ -1041,17 +1060,21 @@ $(window).load(function(){
 
   var tmp;
 
-function make_dict2 (oNames) {
+function make_dict2 (oNames, globalVar, innerVal) {
 	var separator = /[,;\t\n\r]+/;
 
-	for (var i in oNames.l) {
+	for (var i = 0; oNames.l[i]; i++) {
 		var race = oNames.l[i];
-		for(var j in race.list) {
+		for(var j = 0; race.list[j]; j++) {
 			var sbr = race.list[j];
-			for(var k in sbr.src) {
-				var o = sbr.src[k]
+			for(var k = 0; sbr.src[k]; k++) {
+				var o = sbr.src[k];
+				debugger;
+				if(globalVar && innerVal) {
+					o.path = globalVar+"/"+innerVal+"/l/" + i + "/list/" + j + "/src/" + k;
+				}
 
-				if (o.type != 'array') {
+				if (o.type != 'array' && o.l) {
 				  var title = o.name;
 				  var string = o.l;
 				  //console.log(string);
@@ -1071,14 +1094,14 @@ function make_dict2 (oNames) {
 				 // console.dir(arr);
 				  /**/
 				  var tmp_s='';
-				  for (var i=0; i < arr.length; i++) { // words
-					arr[i] = arr[i].trim();
-					for (var j=0; j-1 < arr[i].length-depth; j++) { // simbols in word
+				  for (var m=0; m < arr.length; m++) { // words
+					arr[m] = arr[m].trim();
+					for (var n=0; n-1 < arr[m].length-depth; n++) { // simbols in word
 					  tmp_s='';
 					  var f_s=false;
 					  var f_e=false;
-					  for (var s=0; s < depth && arr[i][+j+ +s] && arr[i][+j+ +s] != ' '; s++) { // triads
-						tmp_s+=arr[i][+j+ +s];
+					  for (var s=0; s < depth && arr[m][+n+ +s] && arr[m][+n+ +s] != ' '; s++) { // triads
+						tmp_s+=arr[m][+n+ +s];
 					  }
 					  
 					  //if(/'/.test(tmp_s) || race.name == "customList")
@@ -1091,7 +1114,7 @@ function make_dict2 (oNames) {
 					  //if (/^([^,;\t\n\r]+)|([^,;\t\n\r]+')/.test(tmp_s)) {
 						f_s=true;
 					  }
-					  if (j==arr[i].length-depth) {
+					  if (n==arr[m].length-depth) {
 						f_e=true;
 					  }
 
@@ -1164,29 +1187,60 @@ function make_dict2 (oNames) {
 	}
 }
 function generate_word(source, oParameters) {
-  var name;
-  if (source.type == 'array' || oParameters && oParameters.type == 'array') {
+	var name;
+  if (source.l && (source.type == 'array' || oParameters && oParameters.type == 'array' || randd(0,1)>0)) {
     var arr = shuffle(source.l.split(","));
     name = arr[0].trim();
   } else {
-	var maxLength = randd(0,4);
-	name = getFr(shuffle(source.end));
-
-	for (var q=0; q<maxLength; q++) {
-		var tmp = "";
-		for (var w=0; w<3 && tmp.length < 1; w++){
-			sh = shuffle(source.mid);
-			tmp = getSim(name, sh, 2);
+	var oSource = source;
+		var sLink = source.link;
+		if (sLink){
+			var aPath = oSource.path.split("/");
+			aPath.pop();
+			var vStart = aPath.shift();
+			oSource = window[vStart];
+			for (var v=0; aPath[v]; v++) {
+				oSource = oSource[aPath[v]];
+			}
+			for (var u in oSource) {
+				if(oSource[u].name == sLink){
+					oSource = oSource[u];
+					break;
+				}
+			}
+			
 		}
-    name = tmp + name;
-  }
-  sh = shuffle(source.st)
-  name = fixName(getSim(name, sh, 2) + name);
+	
+	if (source.mod && source.mod.toLowerCase() == "start") {
+		var aS = shuffle(oSource.l.split(/,\s*/))[0];
+		var name = "";
+		aS = aS.replace(/\s+/ig,"");
+		for (var s=0; s<aS.length; s++){
+			name = name+=aS[s]
+			if(aS[1+ +s] && /[уеыаоэяию]/.test(aS[1+ +s]) && s>1)
+				break;
+		}
+	} else {
+			debugger;
+		var maxLength = randd(0,4);
+		name = getFr(shuffle(oSource.end));
+
+		for (var q=0; q<maxLength; q++) {
+			var tmp = "";
+			for (var w=0; w<3 && tmp.length < 1; w++){
+				sh = shuffle(oSource.mid);
+				tmp = getSim(name, sh, 2);
+			}
+			name = tmp + name;
+		}
+		sh = shuffle(oSource.st);
+		name = fixName(getSim(name, sh, 2) + name);
+	}
   }
   return name;
 }
 function make_name2(src, race, subrace) {
-  var name = '';
+	var name = '';
 
 	for (var t1 in src.l) {
 		if(src.l[t1].name == race){
@@ -1216,10 +1270,6 @@ function make_name2(src, race, subrace) {
 											m--
 										){
 										word = generate_word(source[j]);
-										/*/
-										word = generate_word(source[j], {type: "array"});
-										break;
-										/**/
 									}
 									var prefix = source[j].prefix? source[j].prefix : "";
 									var postfix = source[j].postfix? source[j].postfix : " ";
@@ -1428,7 +1478,7 @@ $("body").on('click', ".minimax", function(){
 
 // обрабатываем имена и получаем словарь
 var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
-make_dict2(name_groups[listName]) ;
+make_dict2(name_groups[listName], "name_groups", listName);
 
 $("body").on('click', "#go", function(){
   var src = $("#selector .combo_box_title").attr("data-val");
@@ -1474,7 +1524,7 @@ $("body").on('click', "#dbg", function(){
 // select list of names
 $("body").on('change', '#listSelect', function(e) {
 	var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
-	make_dict2(name_groups[listName]);
+	make_dict2(name_groups[listName], "name_groups", listName);
 	var comboBox = makeComboBox(name_groups[listName]);
 	$("#names").html(comboBox);
 });
@@ -1518,7 +1568,7 @@ $("body").on('click', "#bGetList", function(){
 	var comboBox = makeComboBox(name_groups[listName]);
 
 	$("#names").empty().append(comboBox);
-	make_dict2(name_groups[listName]) ;
+	make_dict2(name_groups[listName], "name_groups", listName) ;
   }
 
   $("#dbg").click();
@@ -1554,7 +1604,7 @@ $("body").on("click", ".customSelect .option", function() {
   $(this).parent("ul").fadeOut();
   
   var listName = key;//$("#listSelect option:selected").attr("data-key");
-	make_dict2(name_groups[listName]);
+	make_dict2(name_groups[listName], "name_groups", listName);
 	var comboBox = makeComboBox(name_groups[listName]);
 	$("#names").html(comboBox);
 });
