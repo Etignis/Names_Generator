@@ -1069,7 +1069,7 @@ function make_dict2 (oNames, globalVar, innerVal) {
 			var sbr = race.list[j];
 			for(var k = 0; sbr.src[k]; k++) {
 				var o = sbr.src[k];
-				debugger;
+				//debugger;
 				if(globalVar && innerVal) {
 					o.path = globalVar+"/"+innerVal+"/l/" + i + "/list/" + j + "/src/" + k;
 				}
@@ -1091,11 +1091,11 @@ function make_dict2 (oNames, globalVar, innerVal) {
 				  o.end_num=0;
 
 				  var arr = string.split(separator);
-				 // console.dir(arr);
+				  // console.dir(arr);
 				  /**/
 				  var tmp_s='';
 				  for (var m=0; m < arr.length; m++) { // words
-					arr[m] = arr[m].trim();
+					arr[m] = arr[m].trim().replace(/\s+/, "");
 					for (var n=0; n-1 < arr[m].length-depth; n++) { // simbols in word
 					  tmp_s='';
 					  var f_s=false;
