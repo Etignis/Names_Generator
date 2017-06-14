@@ -208,6 +208,7 @@ var name_groups = {
 						"title": "Обычные люди",
 						"schemes": [
 							"male nic surname castle",
+							"male21 male22 nic surname castle",
 							"female surname"
 						],
 						"src": [
@@ -229,7 +230,7 @@ var name_groups = {
 								"prefix": " '",
 								"postfix": "' ",
 								"random": 7,
-								"l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома"	
+								"l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома, Тхая Смерть, Драконорожденный, Ястреб, Черный Ворон, Великан, Чума, Смерть, Гниль, Каменное Сердце, Сын Волка, Сукин Сын, Одноглазый"	
 							},
 							{
 								"name": "castle",
@@ -238,6 +239,19 @@ var name_groups = {
 								"random": 7,
 								"link": "surname",
 								"mod": "start"
+							},
+							{
+								"name": "male21",
+								"type": "array",
+								"postfix": "",
+								"l": "Тео, Тра, Ара, Блад, Аэде, Гала, Гаррен, Бэйн, Аринг, Вар, Дае, Мене, Аде, Хилде, Бер, Арт, Мал, Гал, Хал, Вер, Неме, Риван, Мара, Персе, Вае, Тильде, Раг"
+							},
+							{
+								"name": "male22",
+								"type": "array",
+								"prefix": "",
+								"format": "lowercase",
+								"l": "дор, ваин, тор, ден, вин, лард, вен, даин, клор, ванн, далл, вел, вен, анор, иель, рин, лей, нель, он, аган, лор, бон, рик, дин, рикс, вал, лот"
 							}
 						]
 
@@ -1221,7 +1235,7 @@ function generate_word(source, oParameters) {
 				break;
 		}
 	} else {
-			debugger;
+			//debugger;
 		var maxLength = randd(0,4);
 		name = getFr(shuffle(oSource.end));
 
@@ -1271,8 +1285,8 @@ function make_name2(src, race, subrace) {
 										){
 										word = generate_word(source[j]);
 									}
-									var prefix = source[j].prefix? source[j].prefix : "";
-									var postfix = source[j].postfix? source[j].postfix : " ";
+									var prefix = source[j].hasOwnProperty('prefix')? source[j].prefix : "";
+									var postfix = source[j].hasOwnProperty('postfix')? source[j].postfix : " ";
 									name+= prefix+fixName(word, source[j].format)+postfix;
 									break;
 								}
