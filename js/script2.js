@@ -1256,7 +1256,7 @@ function generate_word(source, oParameters) {
 	
 function getRandomelementFromString(sSource) {
 	var aElements = sSource.split(",");
-	var nMax = aElements.length;
+	var nMax = aElements.length-1;
 	return aElements[randd(0, nMax)];
 }
 function make_name2(src, race, subrace) {
