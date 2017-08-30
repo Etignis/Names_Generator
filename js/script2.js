@@ -134,7 +134,7 @@ function fixName(name, format) {
   name = name.replace(re, '$1');
 	re = /^[бвгджзклмнпрстфхцчшщ][бвгджзклмнпрстфхцчшщ]+/g; // дж бр ст
   if(re.test(name)) {
-    name = name.replace(/^нт|нс|нз/, 'н');
+    name = name.replace(/^нт|нс|нз|нж/, 'н');
     name = name.replace(/^рб/, 'б');
     name = name.replace(/^тч|дз/, 'д');
     name = name.replace(/^рт|рг|лр/, 'р');
