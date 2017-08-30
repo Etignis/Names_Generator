@@ -1,5 +1,5 @@
 $(window).load(function(){
-  
+
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
 
@@ -32,7 +32,7 @@ function getViewPortSize(mod){
 
 	if(mod=="width")
 		return viewportwidth;
-	
+
     return viewportwidth + "~" + viewportheight;
 }
 
@@ -159,7 +159,7 @@ function make_select(src, params) {
     var text = item.title;
 	if(text.length > width)
 		width = text.length;
-    options += "<li class='option' data-key='"+key+"'>"+text+"</li>"; 
+    options += "<li class='option' data-key='"+key+"'>"+text+"</li>";
 	if(key == selected_key){
 		lableText = text
 	}
@@ -167,13 +167,13 @@ function make_select(src, params) {
   width = width>20? 20: width;
   width = width<5? 5: width;
   width = ~~(width*0.9);
-  
+
   var list = "<ul class='list'>" + options + "</ul>";
 
-  var selectedKey = selected_key; 
+  var selectedKey = selected_key;
   var label="<div class='label "+atr_class+"' data-selected-key='" + selectedKey + "' style='min-width:"+width+"em'>" + lableText + "</div>";
   var select = "<div id='" + id + "' class='customSelect'>" + label + list + "</div>"
-  
+
   return select;
 }
 function makeComboBox(src) {
@@ -216,9 +216,11 @@ var name_groups = {
               "name": "casual",
               "title": "Обычные люди",
               "schemes": [
-                "male nic surname castle",
-                "male21 male22 nic surname castle",
-                "female surname"
+                "male nic_male surname castle",
+                "nic_male_adj male",
+                "male21 male22 nic_male surname castle",
+                "female nic_female surname castle",
+                "nic_female_adj female"
               ],
               "src": [
                 {
@@ -233,13 +235,42 @@ var name_groups = {
                   "name": "surname",
                   "l": "Инверс, Шульц, Рихтер, Веббер, Беккер, Гастин, Гастинг, Гастингс, Эрза, Йонг, Барлоу, Эванс, Томас, Брайтвуд, Виндривер, Лакмэн, Хелдер, Хорнрейвен, Штормвинд, Баша, Джассан, Думеин, Кхалид, Мостана, Пашар, Рейн, Дайрнина, Илтазяра, Мурнитара, Стаянога, Улмокина, Чергоба, Агосто, Асторио, Домине, Калабра, Маривальди, Писакар, Рамондо, Фалоне, Абеляр, Авад, Авалиани, Авербах, Авербух, Агилар, Агустини, Адамс, Адамчик, Адан, Адлард, Азаро, Аксар, Аксельрод, Албахари, Алегрия, Алексис, Ален, Алерамо, Аллен, Алмонд, Алон, Алон, Альбер, Альберти, Альберус, Альварес, Альваро, Альвер, Альвинг, Альдани, Альмагор, Амбра, Амери, Амио, Аммиан, Ананд, Анвари, Ангел, Андро, Арад, Аракида, Арден, Ардер, Аренс, Арент, Аретино, Аржан, Арлан, Арреола, Арриан, Арро, Арто, Артуро, Ассо, Астуриас, Атена, Атилла, Аттиль, Ахо, Аш, Ашар, Баар, Байер, Байяр, Баллард, Банвиль, Банделло, Баньян, Бар, Барбери, Барбо, Барбье, Баретти, Барри, Барт, Бартон, Бах, Бахман, Бейкер, Бейли, Бейль, Бейнс, Бембо, Бенедетти, Бентли, Бенцони, Беранже, Берент, Беркли, Бланк, Блейк, Блест, Божидар, Бренцони, Боно, Бонуар, Боон, Борд, Борель, Боско, Боярдо, Брайсон, Брайт, Бранд, Брандис, Брасс, Брентано, Бретон, Бронте, Брукс, Булль, Вайль, Валенс, Валери, Валлер, Валлериус, Валлес, Валь, Вальдес, Варго, Вассиан, Вебер, Вейль, Вейсс, Веллер, Веннер, Верт, Виалар, Виан, Видади, Видал, Виже, Визель, Вильде, Виндж, Вольф, Вуд, Вульф, Габор, Гавальдо, Гай, Галан, Галеано, Галеви, Галера, Галлант, Галло, Гамильтон, Гаммер, Гарднер, Гарленд, Гарнье, Гароди, Гауф, Гвардини, Гвиницелли, Гейер, Гейерманс, Гейм, Геккер, Геллер, Гельфанд, Генц, Герарди, Герберт, Герен, Герольд, Герт, Герц, Гесс, Гессе, Гессен, Гилельс, Гилен, Гомес, Гонкур, Гонкур, Гонсалес, Горан, Госс, Гофман, Гофф, Гоцци, Грааль-Арельский, Гранже, Грасс, Граццини, Гренье, Гренц, Грессе, Гримм, Грин, Гросс, Д’Актиль, Д’Анкона, Д’Обинье, Д’Обиньяк, Дар, Дариус, Де Вилье, Де Ла Мар, Де Лазари, Де Линт, Де Рада, Де Роберти, Дебиоль, Деборд, Делиль, Джойс, Джонс, Джонсон, Джордан, Джордано, Джордж, Джордж, Ди Прима, Ди Филиппо, Диксон, Доде, Додж, Долинго, Дон-Аминадо, Дор, Доррис, Дрейк, Дуглас, Дункан, Дюамель, Дюбуа, Дюваль, Дюпре, Жак, Жамен, Жамм, Жандр, Жане, Жарри, Жарре, Жене, Жене, Женни, Жильбер, Жуандо, Зегерс, Зима, Ивинг, Иво, Имбер, Имбриани, Инбер, Иордани, Ирвин, Ирвинг, Кавальканти, Кавана, Каллас, Калхано, Кальвейра, Кальвино, Кальдерон, Капелла, Капелли, Капеллони, Каппелло, Кардоне, Каркано, Карр, Карре, Картер, Картленд, Каскалес, Касс, Кассиани, Кастро, Като, Кахана, Кахане, Квин, Кей, Кельман, Кемаль, Кено, Кианто, Ким, Кинг, Кино, Кинтана, Кипиани, Киплинг, Кирино, Кит, Кито, Клавель, Кларк, Клаф, Кливленд, Клиффорд, Клодель, Ковальджи, Кокс, Колас, Коннели, Конон, Конради, Коньяр, Король, Коронадо, Корренти, Корсо, Корт, Корти, Корф, Кремер, Критон, Кроль, Крон, Кросс, Кьяри, Кьярини, Лавант, Лави, Лагранж, Лазар, Ламур, Ланжелан, Ланжерон, Ланн, Лануа, Ларбо, Ларра, Ларри, Ларсен, Ласкер, Лаури, Леандр, Левальд, Левант, Леконт, Леман, Лемерсье, Леметр, Лемонте, Лемуан, Лемьер, Ленц, Леопарди, Леру, Леруа, Лесс, Лессинг, Ли, Лили, Липтон, Лир, Лисарди, Лист, Лодж, Локс, Лонг, Лонс, Лоон, Лопес, Вега, Лопес, Лорд, Лоренс, Лоренцо, Лори, Лукас, Лурье, Магориан, Мадо, Мазиус, Май, Майер, Майрон, Маккарти, Маккей, Маккензи, Мальро, Мандельштам, Манджи, Мандино, Манн, Манро, Манто, Мао, Маран, Марани, Маре, Мариас, Маринетти, Марино, Марк-Мишель, Марло, Маро, Марр, Марс, Марсе, Марсель, Мартен, Марти, Мартин, Марциан, Марш, Маршак, Маршалл, Маскаро, Масс, Машаду, Меир, Мей, Мейер, Мейлер, Мелло, Мендес, Мера, Мери, Мериме, Меринг, Мерино, Меркури, Мерло, Мерри, Мерсье, Мертон, Местре, Милани, Миллер, Милли, Миллиган, Миль, Мильтон, Мирсай, Мистри, Миура, Михельсон, Модиано, Молинари, Молине, Монро, Монтанелли, Монтенегро, Монтень, Моравиа, Моралес, Моран, Моранте, Морелле, Морель, Мориц, Моррис, Мур, Мюррей, Мюссе, Мюссо, Надира, Надсон, Нарбут, Нариньяни, Нарсис, Невилл, Негри, Нерваль, Нере, Нерис, Нерсес, Нефф, Никки, Никколини, Никс, Нильсен, Ним, Ниммо, Новалис, Нолан, Нолль, Нолль, Норрис, Нортон, Ньюман, Ойербах, Оливер, Оркан, Ормандо, Ортен, Ортон, Орци, Осман, Оссиан, Остер, Остерман, Отеро, Пант, Паолини, Паркер, Парр, Парун, Пас, Патрици, Перес, Перри, Перро, Перси, Пикард, Пирс, Плат, Платен, Платт, Плесси, Полет, Полициано, Понтано, Портер, Поттер, Престон, Принцис, Пристли, Райс, Райт, Рассел, Раффи, Рахман, Рашильд, Резерфорд, Рей, Рейд, Рейн, Рембо, Ренан, Ренар, Реньяр, Ривера, Рид, Риммель, д'Аквино, Риц, Роббинс, Робер, Роберстон, Робертс, Робинсон, Роган, Родари, Рок, Рокетт, Роллан, Ролли, Роллинс, Ромер, Ромм, Росс, Россе, Россетти, Ростан, Руа, Руссо, Сабатини, Сабир, Сабо, Саверьен, Савиано, Савиньон, Савиоли, Саймон, Санд, Сартр, Сафир, Сиверс, Секст, Сен-Жорж, Сент-Аман, Сент-Олер, Сент-Экзюпери, Серафино, Сильва, Симмонс, Симон, Сирс, Смарт, Смит, Сорель, Соррентино, Спарк, Спаркс, Спациани, Старк, Стафф, Стельмах, Стерн, Стиль, Стратис, Страусс, Стросс, Строцци, Стюарт, Суарес, Сюар, Тадеос, Таро, Тассо, Тирсо, Тиссо, Тит, Тома, Томас, Томсон, Топелиус, Тор, Торелли, Торо, Торрес, Уайт, Уилсон, Унсури, Урбан, Ури, Фабер, Фабри, Фабрис, Фабрициус, Фанте, Фаст, Фейербах, Фернандес, Ферран, Феррисс, Фест, Филдинг, Фиори, Фицджеральд, Фишер, Флинн, Флинт, Флориан, Фогель, Фокс, Фонтан, Фонтенель, Фор, Форд, Форсайт, Фосс, Фоссе, Франс, Фред, Фрейн, Фрид, Хаггард, Хантер, Харрис, Харт, Хилл, Хофф, Хоффман, Черри, Шабах, Шагар, Шакир, Шамир, Шапиро, Шар, Шаррон, Шафер, Шаферан, Шафран, Шафф, Шахани, Шахар, Шахрияр, Швейцер, Шевалль, Шевалье, Шекли, Шелдон, Шелли, Шепард, Шерман, Шмидт, Шопенгауэр, Шоу, Штерн, Шульц, Шуман, Шумахер, Эванс, Эвола, Эгарт, Эланд, Эмерсон, Эрдман, Эриксон, Эрнандес, Эспиноса, Юнг, Юрис, Ян, Янг"
                 },
+
                 {
-                  "name": "nic",
+                  "name": "nic_male",
                   "type": "array",
                   "prefix": " '",
                   "postfix": "' ",
                   "random": 7,
-                  "l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома, Тхая Смерть, Драконорожденный, Ястреб, Черный Ворон, Великан, Чума, Смерть, Гниль, Каменное Сердце, Сын Волка, Сукин Сын, Одноглазый, Сизый, Шило, Скромник"	
+                  "l": "Дьявол, Кузнец, Демон, Малыш, Мясник, Пес,, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Гвоздь, Дрозд, Король, Владыка, Лёд, Мертец, Труп, Безпощадный, Мастер, Крюк, Создание, Зверь, Дракон, Змей, Дед, Драконорожденный, Ястреб, Дедушка, Храбрец, Певец, Ткач, Пасечник, Кузнец, Коваль, Черный Ворон, Великан, Портной, Шорник, Каменное Сердце, Сын Волка, Сукин Сын, Сизый, Счастливчик, Паук, Скромник, Волк, Лев, Тигр, Медведь, Лис, Кабан, Свинья, Ворон, Псих, Рассвет, Закат, Сумрак, Мрак, Деспот, Тиран, Лжец, Бог, Горбун"
+                },
+                {
+                  "name": "nic_male_adj",
+                  "type": "array",
+                  "random": 2,
+                  "l": "Бездушный, Беспалый, Толстяк, Мрачный, Гнилой, Тухлый, Скованный, Святой, Рыжий, Темный, Белый, Бессмертный, Вечный, Черный, Шепчущий, Серый, Медный, Старый, Золотой, Полыхающий, Горящий, Храбрый, Честный, Верный, Неистовый, Одноглазый, Яростный, Правдивый, Извечный,  Гибельный, Слепой, Глухой, Немой, благословенный, Разбитый, Бешенный, Проклятый, Отравленный, Скрытый, Дикий, Светлый, Скрученный, Скрюченый"
+                },
+                {
+                  "name": "nic_female",
+                  "type": "array",
+                  "prefix": " '",
+                  "postfix": "' ",
+                  "random": 7,
+                  "l": "Дьяволица, Шторм, Гроза, Буря, Королева, Ведьма, Бестия,  Виверна, Змея, Бабушка, Мать, Матушка, Певица, Ткачиха, Беда, Паучиха, Волчица, Львица, Тигрица, Медведица, Лиса, Ворона, Дева, Госпожа, Хозяйка, Заря, Тьма, Богиня"
+                },
+                {
+                  "name": "nic_female_adj",
+                  "type": "array",
+                  "random": 2,
+                  "l": "Бездушная, Безпощадная, Мрачная, Скованная, Святая, Рыжая, Темная, Белая, Бессмертная, Вечная, Черная, Шепчущая, Серая, Медная, Старая, Золотая, Полыхающая, Горящая, Храбрая, Честная, Верная, Неистовая, Яростная, Правдивая, Гибельная, Извечная, Слепая, Глухая, Немая, благословенная, Разбитая, Бешенная, Проклятая, Отравленная, Скрытая, Дикая, Светлая, Лживая, Скрюченная, Гррбатая"
+                },
+                {
+                  "name": "nic_uni",
+                  "type": "array",
+                  "prefix": " '",
+                  "postfix": "' ",
+                  "random": 7,
+                  "l": "Чума, Мотыга, Смерть, Гниль, Лапа, Доска,  Сластена, Мармелад, Колбаса, Прилипала, Обжора, Плешь, Крыса, Котома, Тихая Смерть, Голова, Призрак,  Шторм, Ангел, Вампир, Тень, Убийца, Глупышка, Мрак, Гниль, Ночь, Звезда, Калека, Шепот, Серебро, Зуб, Шило, Клык, Тварь, Война, Ярость, Солнце, Отрава, Проклятие, Гибель, Катастрофа, Хаос, Безумие, Безумство, Бешенство, Ребенок, Проклятье, Гора, Скала, Море, Луна, Дичь, Легион, Выкуп, Тирания"
                 },
                 {
                   "name": "castle",
@@ -507,7 +538,7 @@ var name_groups = {
                   "prefix": " '",
                   "postfix": "' ",
                   "random": 7,
-                  "l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома, Тхая Смерть, Драконорожденный, Ястреб, Черный Ворон, Великан, Чума, Смерть, Гниль, Каменное Сердце, Сын Волка, Сукин Сын, Одноглазый, Сизый, Шило, Скромник, Вестон"	
+                  "l": "Мотыга, Кузнец, Обжора, Плешь, Крыса, Голова, Малыш, Мясник, Пес, Сластена, Мармелад, Колбаса, Прилипала, Беспалый, Палец, Голяк, Кирпич, Булыжник, Пень, Топор, Лапа, Доска, Гвоздь, Дрозд, Толстяк, Котома, Тхая Смерть, Драконорожденный, Ястреб, Черный Ворон, Великан, Чума, Смерть, Гниль, Каменное Сердце, Сын Волка, Сукин Сын, Одноглазый, Сизый, Шило, Скромник, Вестон"
                 },
                 {
                   "name": "castle",
@@ -810,7 +841,7 @@ var name_groups = {
             }
             ]
           },
-          
+
         ]
       },
       {
@@ -938,7 +969,7 @@ var name_groups = {
             "title": "Тифлинги",
             "schemes": [
             "male nic",
-            "female nic",					  
+            "female nic",
             "male surname",
             "female surname"
             ],
@@ -957,7 +988,7 @@ var name_groups = {
               "l": "Безрассудство, Вера, Идеал, Искусство, Музыка, Мука, Надежда, Напев, Нигде, Открытость, Отчаяние, Падаль, Поиск, Почтение, Поэзия, Превосходство, Скорбь, Слава, Случайность, Страх, Усталость"
             },
             {
-              "name": "surname",						
+              "name": "surname",
                     "random": 2,
               "l": "Лафиан, Хлещехвост, Мрачнохмл, Желчебой, Цезбулан, Джеферлох, Дозмордин, Курелех, Темнопламень, Рельздехун, Грашт, Пуледиз, Армансусс, Черногонь, Вревиликус, Керевон, Офензул, Тетенбри, Чеммидон, Проклярость"
             }
@@ -1088,14 +1119,14 @@ function make_page() {
 	var select = "";
 	var arr = [
 		{
-			name:"names_dnd",			
+			name:"names_dnd",
 			title:"ДнД имена"
 		},
-		{			
+		{
 			name:"names",
 			title:"Специфичные имена"
 		}/*,
-		{			
+		{
 			name:"fantastic",
 			title:"Фантастика"
 		}*/
@@ -1104,7 +1135,7 @@ function make_page() {
 		select+="<option data-key='"+arr[i].name+"'>"+arr[i].title+"</option>"
 	}
 	select = "<select class='bt' id='listSelect'>"+select+"</select>";
-	
+
 	select = make_select(arr, {selected_key: "names_dnd", id: "nameListSelect", class: "bt"});
 	var out = "<div class='row'><div id='names'>"+comboBox+"</div><div id='result'>"+info_text+"</div></div>";
 	generator="<a href='/' class='bt'><i class='fa fa-home'></i></a>"+
@@ -1115,54 +1146,54 @@ function make_page() {
 		"<a class='bt' id='info'><i class='fa fa-question-circle'></i></a>";
 
   $('body').html("<div id='panel'>"+generator+"</div>"+out);
-  
+
 	/*/
     if(getViewPortSize("width") > 450) {
 	  var pre_bg = "<div id='pre_bg' style='display: none'><img src='img/bg_custom.png'><img src='img/bg_effects.png'><img src='img/bg_loot.png'><img src='img/bg_magic.png'><img src='img/bg_maps.png'><img src='img/bg_tressure.png'><img src='img/bg_encounters.png'></div>";
-	  
+
 	  $('body').append(pre_bg);
 	}
 	/**/
-  
+
   setSelectedItem();
 }
 
-  
+
   function setSelectedItem() {
     var sHash = window.location.hash;
     if(sHash) {
       var aResult, oItem;
       // list
       aResult = sHash.match(/#list=([A-Za-z\d_-]+)/); // #list=name
-      
+
       if(aResult && aResult[1]){
         oItem = $("#nameListSelect .option[data-key="+aResult[1]+"]").eq(0);
         if(oItem){
-          selectCustomSelect($("#nameListSelect"), aResult[1], oItem.text());            
-        } 
+          selectCustomSelect($("#nameListSelect"), aResult[1], oItem.text());
+        }
       }
-       
+
       setTimeout(function(){
         //item
         aResult = sHash.match(/[#&]item=([A-Za-z\d_-]+)/); // #item=name
-        
+
         if(aResult && aResult[1]){
           oItem = $("label[for=ch_"+aResult[1]+"]").eq(0);
           if(oItem){
             onSelectItemPress(oItem);
             $("#go").click();
-          } 
-        }        
+          }
+        }
       }.bind(this), 100);
-      
+
     }
   }
-  
-  
+
+
 // get item
 function onSelectItemPress(src) {
 	var d_root='', d_parent='', trig=true;
-	
+
 	var attrFor = src.attr("for"); // $("input#"+attrFor)
 	d_root = $("input#"+attrFor).attr("data-root");
 	d_parent = $("input#"+attrFor).attr("data-parent");
@@ -1274,10 +1305,10 @@ function onSelectItemPress(src) {
 			$(".combo_box_title").html(src.closest(".combo_box").attr('data-text'));
 
 	/**/
-	
-	
+
+
 	// bg
-	
+
 	//var fChecked = $(this).find("input:checked").length>0? true: false;
 	//var bg = $(this).attr("data-bg");
 	var bg = $("#selector").find("input:checked + label[data-bg] ").attr("data-bg");
@@ -1292,9 +1323,9 @@ function onSelectItemPress(src) {
 	} else {
 		$("body").attr("class", "");
 	}
-		
+
 	// bg /
-  
+
   // url hash
   var NameTypeSelectVal = $("#nameListSelect .label").attr("data-selected-key");
   var sHashVal = (leng==1)? $("#selector").find("input:checked + label[for] ").attr("for").replace("ch_", "") : "";
@@ -1303,7 +1334,7 @@ function onSelectItemPress(src) {
   if (leng==1) {
     sHash+="&item="+sHashVal;
     location.hash = sHash;
-	  
+
   } else if ($("input:checked[data-root]").length == 1) {
     sHashVal = $("input:checked[data-root]").eq(0).attr("data-root");
     sHash += "&item="+sHashVal;
@@ -1313,19 +1344,19 @@ function onSelectItemPress(src) {
     //history.pushState("", document.title, window.location.pathname);
     location.hash = sHash;
   }
-  
+
 	return false;
 }
 
   function selectCustomSelect(oSelect, sKey, sText){
     oSelect.find(".label").attr("data-selected-key", sKey).text(sText);
     oSelect.find("ul").fadeOut();
-    
+
     var listName = sKey;//$("#listSelect option:selected").attr("data-key");
     make_dict2(name_groups[listName], "name_groups", listName);
     var comboBox = makeComboBox(name_groups[listName]);
     $("#names").html(comboBox);
-    
+
     // url hash
     var NameTypeSelectVal = $("#nameListSelect .label").attr("data-selected-key");
     var sHash = "list="+NameTypeSelectVal;
@@ -1376,7 +1407,7 @@ function make_dict2 (oNames, globalVar, innerVal) {
 					  for (var s=0; s < depth && arr[m][+n+ +s] && arr[m][+n+ +s] != ' '; s++) { // triads
 						tmp_s+=arr[m][+n+ +s];
 					  }
-					  
+
 					  //if(/'/.test(tmp_s) || race.name == "customList")
 						  //debugger;
 
@@ -1481,9 +1512,9 @@ function generate_word(source, oParameters) {
             break;
           }
         }
-        
+
       }
-    
+
     if (source.mod && source.mod.toLowerCase() == "start") {
       var aS = shuffle(oSource.l.split(/,\s*/))[0];
       var name = "";
@@ -1510,12 +1541,12 @@ function generate_word(source, oParameters) {
       name = fixName(getSim(name, sh, 2) + name);
       for(var q=10; q>0 && name.length<2; q--){
         name = fixName(getSim(name, sh, 2) + name);
-      } 
+      }
     }
   }
   return name;
 }
-	
+
 function getRandomelementFromString(sSource) {
 	var aElements = sSource.split(",");
 	var nMax = aElements.length-1;
@@ -1573,7 +1604,7 @@ function make_name2(src, race, subrace) {
 		}
 	}
 
-	//name = (name.length<5 && randd(0,1)>0)? name = 
+	//name = (name.length<5 && randd(0,1)>0)? name =
 
   return name;
 }
@@ -1615,7 +1646,7 @@ $("body").on('click', ".combo_box_title, .combo_box_arrow", function(){
 			el.next(".combo_box_arrow").html(ARR_UP);
 		}
 	});
-	
+
 
 $("body").on('click', ".combo_box input", function(event){
 	//var checked = $(this).prop("checked");
@@ -1631,7 +1662,7 @@ $("body").on('click', ".combo_box input", function(event){
 });
 
 $("body").on('click', ".combo_box label", function(){
-	
+
 	onSelectItemPress($(this));
 	return false;
 });
@@ -1644,7 +1675,7 @@ $("body").on('click', ".minimax", function(){
 		oParent.find("label").eq(0).show();
 	} else {
 		$(this).removeClass("max").addClass("min");
-		oParent.find("label").show();	
+		oParent.find("label").show();
 	}
 });
 
@@ -1653,6 +1684,7 @@ var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listS
 make_dict2(name_groups[listName], "name_groups", listName);
 
 $("body").on('click', "#go", function(){
+  console.log("#go!");
   var src = $("#selector .combo_box_title").attr("data-val");
   if(!src)
     return false;
@@ -1694,7 +1726,7 @@ $("body").on('click', "#dbg", function(){
   if($("#mod_win").length>0) $("#mod_win").hide();
   if($("#mod_win_info").length>0) $("#mod_win_info").hide();
 });
-	
+
 // select list of names
 $("body").on('change', '#listSelect', function(e) {
 	var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
@@ -1775,16 +1807,16 @@ $("body").on('click', "#info", function(){
     var sKey = $(this).attr("data-key");
     var sText = $(this).text();
     var oSelect =  $(this).closest(".customSelect");
-    selectCustomSelect(oSelect, sKey, sText);   
+    selectCustomSelect(oSelect, sKey, sText);
   });
 
 
   // ENTER
   $("body").on('keyup', function(e){
     var code = e.keyCode || e.which;
-			if(code == 13 && $("#go:disabled").length==0) {        
+			if(code == 13 && $("#go:disabled").length==0) {
         $("#go").click();
-      }  
+      }
   });
 
 });
