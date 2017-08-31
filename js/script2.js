@@ -218,9 +218,11 @@ var name_groups = {
               "schemes": [
                 "male nic_male|nic_uni surname castle|town {{3}}",
                 "nic_male_adj male",
+                "male nic_male_adj",
                 "male21 male22 nic_male|nic_uni surname castle|town {{3}}",
                 "female nic_female|nic_uni surname castle|town {{3}}",
-                "nic_female_adj female"
+                "nic_female_adj female",
+                "female nic_female_adj"
               ],
               "src": [
                 {
