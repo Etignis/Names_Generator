@@ -216,10 +216,10 @@ var name_groups = {
               "name": "casual",
               "title": "Обычные люди",
               "schemes": [
-                "male nic_male|nic_uni surname castle {{3}}",
+                "male nic_male|nic_uni surname castle|town {{3}}",
                 "nic_male_adj male",
-                "male21 male22 nic_male|nic_uni surname castle {{3}}",
-                "female nic_female|nic_uni surname castle {{3}}",
+                "male21 male22 nic_male|nic_uni surname castle|town {{3}}",
+                "female nic_female|nic_uni surname castle|town {{3}}",
                 "nic_female_adj female"
               ],
               "src": [
@@ -274,6 +274,14 @@ var name_groups = {
                   "name": "castle",
                   "prefix": " из замка ",
                   "postfix": "холл,берг,хольм,брук,дорф,хейм,вальд",
+                  "random": 7,
+                  "link": "surname",
+                  "mod": "start"
+                },
+                {
+                  "name": "town",
+                  "prefix": " из ",
+                  "postfix": "брука,дорфа,вальда,шира,вэйла,стоуна,коста,вии,берга,лии,мии,дии,ии",
                   "random": 7,
                   "link": "surname",
                   "mod": "start"
