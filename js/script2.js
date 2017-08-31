@@ -216,10 +216,10 @@ var name_groups = {
               "name": "casual",
               "title": "Обычные люди",
               "schemes": [
-                "male nic_male surname castle",
+                "male nic_male|nic_uni surname castle {{3}}",
                 "nic_male_adj male",
-                "male21 male22 nic_male surname castle",
-                "female nic_female surname castle",
+                "male21 male22 nic_male|nic_uni surname castle {{3}}",
+                "female nic_female|nic_uni surname castle {{3}}",
                 "nic_female_adj female"
               ],
               "src": [
@@ -247,7 +247,6 @@ var name_groups = {
                 {
                   "name": "nic_male_adj",
                   "type": "array",
-                  "random": 2,
                   "l": "Бездушный, Беспалый, Толстяк, Мрачный, Гнилой, Тухлый, Скованный, Святой, Рыжий, Темный, Белый, Бессмертный, Вечный, Черный, Шепчущий, Серый, Медный, Старый, Золотой, Полыхающий, Горящий, Храбрый, Честный, Верный, Неистовый, Одноглазый, Яростный, Правдивый, Извечный,  Гибельный, Слепой, Глухой, Немой, благословенный, Разбитый, Бешенный, Проклятый, Отравленный, Скрытый, Дикий, Светлый, Скрученный, Скрюченый"
                 },
                 {
@@ -261,7 +260,6 @@ var name_groups = {
                 {
                   "name": "nic_female_adj",
                   "type": "array",
-                  "random": 2,
                   "l": "Бездушная, Безпощадная, Мрачная, Скованная, Святая, Рыжая, Темная, Белая, Бессмертная, Вечная, Черная, Шепчущая, Серая, Медная, Старая, Золотая, Полыхающая, Горящая, Храбрая, Честная, Верная, Неистовая, Яростная, Правдивая, Гибельная, Извечная, Слепая, Глухая, Немая, благословенная, Разбитая, Бешенная, Проклятая, Отравленная, Скрытая, Дикая, Светлая, Лживая, Скрюченная, Гррбатая"
                 },
                 {
@@ -1497,23 +1495,25 @@ function generate_word(source, oParameters) {
     name = arr[0].trim();
   } else {
     var oSource = source;
-      var sLink = source.link;
-      if (sLink){
-        var aPath = oSource.path.split("/");
-        aPath.pop();
-        var vStart = aPath.shift();
-        oSource = window[vStart];
-        for (var v=0; aPath[v]; v++) {
-          oSource = oSource[aPath[v]];
-        }
-        for (var u in oSource) {
-          if(oSource[u].name == sLink){
-            oSource = oSource[u];
-            break;
-          }
-        }
+    var sLink = source.link;
 
+    // link to annother part of scheme (for castles...)
+    if (sLink){
+      var aPath = oSource.path.split("/");
+      aPath.pop();
+      var vStart = aPath.shift();
+      oSource = name_groups; // take root source
+      for (var v=0; aPath[v]; v++) {
+        oSource = oSource[aPath[v]];
       }
+      for (var u in oSource) {
+        if(oSource[u].name == sLink){
+          oSource = oSource[u];
+          break;
+        }
+      }
+
+    }
 
     if (source.mod && source.mod.toLowerCase() == "start") {
       var aS = shuffle(oSource.l.split(/,\s*/))[0];
@@ -1564,9 +1564,27 @@ function make_name2(src, race, subrace) {
 			for (var t2 in src.l[t1].list) {
 				if (src.l[t1].list[t2].name == subrace) {
 					var cur = src.l[t1].list[t2];
-					var schemes = shuffle(cur.schemes);
-					var schema = schemes[0];
+
+          // multiply schemes if need
+          var schemes = [];
+          cur.schemes.forEach(function(el) {
+            var p = el.match(/{{(\d+)\b}}/);
+            var max = p? p[1] : 1;
+            var str = el.replace(/\s*{{\s*\d+\s*}}\s*/, "");
+            for(var i=0; i<max; i++){
+              schemes.push(str);
+            }
+          });
+
+					var schema = shuffle(schemes)[0];
+
 					var name_arr = schema.split(" ");
+
+          // choose variants from "var1|var2"
+          name_arr.forEach(function(el){
+            el = shuffle(el.split("|"))[0];
+          });
+
 					var source = cur.src;
 					for (var i in name_arr) {
 						for( var j in source) {
