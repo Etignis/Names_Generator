@@ -136,7 +136,7 @@ function fixName(name, format) {
   if(re.test(name)) {
     name = name.replace(/^нт|нс|нз|нж|нц/, 'н');
     name = name.replace(/^рб/, 'б');
-    name = name.replace(/^тч|дз/, 'д');
+    name = name.replace(/^тч|дз|рш/, 'д');
     name = name.replace(/^рт|рг|лр|мч/, 'р');
   }
 
