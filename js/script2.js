@@ -1581,8 +1581,8 @@ function make_name2(src, race, subrace) {
 					var name_arr = schema.split(" ");
 
           // choose variants from "var1|var2"
-          name_arr.forEach(function(el){
-            el = shuffle(el.split("|"))[0];
+          name_arr.forEach(function(el, i, arr){
+            arr[i] = shuffle(el.split("|"))[0];
           });
 
 					var source = cur.src;
