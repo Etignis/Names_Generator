@@ -137,7 +137,7 @@ function fixName(name, format) {
     name = name.replace(/^нт|нс|нз|нж/, 'н');
     name = name.replace(/^рб/, 'б');
     name = name.replace(/^тч|дз/, 'д');
-    name = name.replace(/^рт|рг|лр/, 'р');
+    name = name.replace(/^рт|рг|лр|мч/, 'р');
   }
 
   if (format == 'lowercase') {
