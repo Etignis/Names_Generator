@@ -128,6 +128,8 @@ function getSim2(slog, a, sim) {
 function fixName(name, format) {
   var re = /^[ЫыЬьЪь]|Й[йцкнгшщзхъфвпрлджчсмтьб]+/;
   name = name.replace(re, '');
+	re = /^-/g;
+  name = name.replace(re, '');
 	re = /^(?=(.))\1{2,}/g;
   name = name.replace(re, '$1');
 	re = /^([уеыаоэяию])[уеыаоэяию]+/g;
@@ -1412,15 +1414,15 @@ function make_page() {
 	var arr = [
 		{
 			name:"names_dnd",
-			title:"ДнД имена"
-		},
-		{
-			name:"names",
-			title:"Специфичные имена"
+			title:"Dungeon&Dragons"
 		},
 		{
 			name:"names_tes",
 			title:"The Elder Scrolls"
+		},
+		{
+			name:"names",
+			title:"Специфичные имена"
 		},
 		{
 			name:"fantastic",
