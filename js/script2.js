@@ -1414,7 +1414,7 @@ function make_page() {
 	var arr = [
 		{
 			name:"names_dnd",
-			title:"Dungeon&Dragons"
+			title:"Dungeons&Dragons"
 		},
 		{
 			name:"names_tes",
