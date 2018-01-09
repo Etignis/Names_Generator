@@ -1634,12 +1634,12 @@ function onSelectItemPress(src) {
   if (leng==1) {
     sHash+="&item="+sHashVal;
     location.hash = sHash;
-    scrollTo();
+    //scrollTo();
   } else if ($("input:checked[data-root]").length == 1) {
     sHashVal = $("input:checked[data-root]").eq(0).attr("data-root");
     sHash += "&item="+sHashVal;
     location.hash = sHash;
-    scrollTo();
+    //scrollTo();
   } else {
     //history.pushState("", document.title, window.location.pathname);
     location.hash = sHash;
@@ -1648,10 +1648,12 @@ function onSelectItemPress(src) {
 	return false;
 }
 function scrollTo(){
-  $("#selector .combo_box_content").slideUp();
+  if(location.hash.length>2){
+    $("#selector .combo_box_content").slideUp();
    $('html, body').animate({
         scrollTop: $("#result").offset().top
     }, 100);
+  }
 }
 
   function selectCustomSelect(oSelect, sKey, sText){
@@ -2144,5 +2146,7 @@ $("body").on('click', "#info", function(){
         $("#go").click();
       }
   });
+  
+  scrollTo();
 
 });
