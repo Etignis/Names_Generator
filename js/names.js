@@ -1235,7 +1235,7 @@ var name_groups = {
           },  
           {
             "name": "persia",
-            "title": "Парсы",
+            "title": "Персы",
             "schemes": [
               "male",
               "female"
