@@ -2,6 +2,24 @@ $(window).load(function(){
 
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
+  
+    var freqdict = {};
+   //freqdict["start"]={};
+   freqdict.start={};
+   freqdict.mid={};
+   freqdict.end={};
+   freqdict.st_num=0;
+   freqdict.mid_num=0;
+   freqdict.end_num=0;
+   var st=[];
+   var mid=[];
+   var end=[];
+
+  var depth = 3;
+  var sim = 2;
+
+  var tmp;
+
 
 function getViewPortSize(mod){
     var viewportwidth;
@@ -473,12 +491,14 @@ function onSelectItemPress(src) {
 	return false;
 }
 function scrollTo(){
-  if(location.hash.split("&")>1){
-    $("#selector .combo_box_content").slideUp();
-   $('html, body').animate({
-        scrollTop: $("#result").offset().top
-    }, 100);
-  }
+  setTimeout(function(){
+    if(location.hash.split("&")>1){
+      $("#selector .combo_box_content").slideUp();
+     $('html, body').animate({
+          scrollTop: $("#result").offset().top
+      }, 100);
+    }
+  }, 600);
 }
 
   function selectCustomSelect(oSelect, sKey, sText){
@@ -770,27 +790,11 @@ function make_name2(src, race, subrace) {
 
 
 //console.dir(names);
-	make_page();
+
 
  // var name = 'Name';
 
 //console.log(text);
-  var freqdict = {};
-   //freqdict["start"]={};
-   freqdict.start={};
-   freqdict.mid={};
-   freqdict.end={};
-   freqdict.st_num=0;
-   freqdict.mid_num=0;
-   freqdict.end_num=0;
-   var st=[];
-   var mid=[];
-   var end=[];
-
-  var depth = 3;
-  var sim = 2;
-
-  var tmp;
 
 $("body").on('click', ".combo_box_title, .combo_box_arrow", function(){
 		var el = $(this).closest(".combo_box").find(".combo_box_content");
@@ -838,9 +842,7 @@ $("body").on('click', ".minimax", function(){
 	}
 });
 
-// обрабатываем имена и получаем словарь
-var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
-make_dict2(name_groups[listName], "name_groups", listName);
+
 
 $("body").on('click', "#go", function(){
   console.log("#go!");
@@ -980,6 +982,9 @@ $("body").on('click', "#info", function(){
       }
   });
   
+  make_page();
+  // обрабатываем имена и получаем словарь
+  var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
+  make_dict2(name_groups[listName], "name_groups", listName);
   scrollTo();
-
 });
