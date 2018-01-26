@@ -492,13 +492,13 @@ function onSelectItemPress(src) {
 }
 function scrollTo(){
   setTimeout(function(){
-    if(location.hash.split("&")>1){
+    if(location.hash.split("&").length>1){
       $("#selector .combo_box_content").slideUp();
      $('html, body').animate({
           scrollTop: $("#result").offset().top
       }, 100);
     }
-  }, 600);
+  }, 60);
 }
 
   function selectCustomSelect(oSelect, sKey, sText){
@@ -512,9 +512,22 @@ function scrollTo(){
 
     // url hash
     var NameTypeSelectVal = $("#nameListSelect .label").attr("data-selected-key");
-    var sHash = "list="+NameTypeSelectVal;
-    //location.hash = (leng==1)? sHash : "";
-    location.hash = sHash;
+    //var sHash = "list="+NameTypeSelectVal;
+    var sHash = location.hash.slice(1);
+    var aHash = sHash.split("&").map(function(item){return item.split("=")});
+    var fFound = false;
+    for(var i=0; i<aHash.length; i++) {
+      if(aHash[i][0] == "list"){
+        aHash[i][1] = NameTypeSelectVal;
+        fFound = true;
+        break;
+      }
+    }
+    if(!fFound) {
+      aHash.push(["list",NameTypeSelectVal]);
+    }
+    var sNewHash = aHash.map(function (pair){return pair.join("=")}).join("&");
+    location.hash = sNewHash;
   }
 
 function make_dict2 (oNames, globalVar, innerVal) {
