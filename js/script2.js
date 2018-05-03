@@ -1,4 +1,4 @@
-$(window).load(function(){
+$(document).ready(function(){
 
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
@@ -831,20 +831,24 @@ function addNameLog(oParams) {
 		aNameLog.pop();
 	} 	
 	aNameLog.unshift(oParams);
-	setConfig("aNameLog", aNameLog);
 }
 function removeNameLog(i){
 	aNameLog.splice(i,1);
 }
 function updateNameLog() {
 	var aNames = [];
+	setConfig("aNameLog", aNameLog);
 	aNameLog.forEach(function(oName) {
 		aNames.push("<tr><td>"+oName.sex+"</td><td>"+oName.name+"</td><td><button class='remove_name'>[-]</button></td></tr>");
-	});
-	var oLog = "<table align='center' id='nameLog'><tr><td colspan='3'><small>Сохраненные имена</small></td></tr>"+aNames.join("")+"<tr><td colspan='3'><small>"+aNames.length+"/20</small></td></tr></table>";
+	});	
 	if($("#nameLog").length) {
 		$("#nameLog").remove();
 	}
+	if(aNames.length==0) {
+		return;
+	}
+	var oLog = "<table align='center' id='nameLog'><tr><td colspan='3'><small>Сохраненные имена</small></td></tr>"+aNames.join("")+"<tr><td colspan='3'><small>"+aNames.length+"/20</small><br><button class='clear_name'>Удалить все</button></td></tr></table>";
+
 	$("#result").append(oLog);
 }
 function loadNameLog() {
@@ -938,6 +942,10 @@ $("body").on('click', ".remove_name", function(){
 	var nIndex = oRow.index();
 	
 	removeNameLog(nIndex);
+	updateNameLog();
+});
+$("body").on('click', ".clear_name", function(){
+	aNameLog.length = 0;
 	updateNameLog();
 });
 
