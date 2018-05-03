@@ -2,6 +2,9 @@ $(window).load(function(){
 
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
+	
+	var aNameLog = [];
+	var oConfig = {}, sConfigName = "configNames";
   
     var freqdict = {};
    //freqdict["start"]={};
@@ -299,6 +302,8 @@ function make_page() {
 	/**/
 
   setSelectedItem();
+  loadNameLog();
+  updateNameLog();
 }
 
 
@@ -808,6 +813,43 @@ function make_name2(src, race, subrace) {
  // var name = 'Name';
 
 //console.log(text);
+function setConfig(prop, val) {
+	if(prop && val != undefined && oConfig) {
+		oConfig[prop] = val;
+		localStorage.setItem(sConfigName, JSON.stringify(oConfig));
+	}
+}
+function getConfig(prop) {
+	oConfig = JSON.parse(localStorage.getItem(sConfigName)) || {};
+	if(prop!=undefined) {
+		return localStorage.getItem(sConfigName)? oConfig[prop] : {};
+	}
+	return oConfig;
+}
+function addNameLog(oParams) {
+	if(aNameLog.length>20) {
+		aNameLog.pop();
+	} 	
+	aNameLog.unshift(oParams);
+	setConfig("aNameLog", aNameLog);
+}
+function removeNameLog(i){
+	aNameLog.splice(i,1);
+}
+function updateNameLog() {
+	var aNames = [];
+	aNameLog.forEach(function(oName) {
+		aNames.push("<tr><td>"+oName.sex+"</td><td>"+oName.name+"</td><td><button class='remove_name'>[-]</button></td></tr>");
+	});
+	var oLog = "<table align='center' id='nameLog'><tr><td colspan='3'><small>Сохраненные имена</small></td></tr>"+aNames.join("")+"<tr><td colspan='3'><small>"+aNames.length+"/20</small></td></tr></table>";
+	if($("#nameLog").length) {
+		$("#nameLog").remove();
+	}
+	$("#result").append(oLog);
+}
+function loadNameLog() {
+	aNameLog = getConfig("aNameLog");
+}
 
 $("body").on('click', ".combo_box_title, .combo_box_arrow", function(){
 		var el = $(this).closest(".combo_box").find(".combo_box_content");
@@ -866,21 +908,39 @@ $("body").on('click', "#go", function(){
   var number = 5;
   var table = "";
   var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
-
+  var bSave = "<button class='save_name'>[S]</button>";
+  
   for(var n in names_line) {
     var race = names_line[n].trim().split(" ");
     for(var r=0; r<number; r++) {
       let oName =  make_name2(name_groups[listName], race[0], race[1]);
       name = oName.name;
       sex = oName.sex;
-      table+="<tr><td>"+sex+"</td><td>"+name+"</td></tr>";
+      table+="<tr><td>"+sex+"</td><td>"+name+"</td><td>"+bSave+"</td></tr>";
       //$("#result").append(name+"<br>");
     }
   }
   table="<table align='center'>"+table+"</table>";
   $("#result").html(table);
+  updateNameLog();
 
 });
+$("body").on('click', ".save_name", function(){
+	var oRow = $(this).parent().parent();
+	var sSex = oRow.find("td").eq(0).html();
+	var sName = oRow.find("td").eq(1).html();
+	
+	addNameLog({sex: sSex, name: sName});
+	updateNameLog();
+});
+$("body").on('click', ".remove_name", function(){
+	var oRow = $(this).parent().parent();
+	var nIndex = oRow.index();
+	
+	removeNameLog(nIndex);
+	updateNameLog();
+});
+
 $("body").on('click', "#addList", function(){
   if($("#dbg").length>0) {
 
