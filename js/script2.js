@@ -1,4 +1,4 @@
-$(window).load(function(){
+$(document).ready(function(){
 
 	var ARR_DOWN = '<i class="fa fa-arrow-down"></i>';
 	var ARR_UP = '<i class="fa fa-arrow-up"></i>';
@@ -730,7 +730,7 @@ function getRandomelementFromString(sSource) {
   // return prefix+fixName(word, src)+postfix;
 // }
 function make_name2(src, race, subrace) {
-	var name = '', sSex='<i title="Универсальное имя" class="fa fa-genderless fa-fw" aria-hidden="true"></i>';
+	var name = '', sSex='<i title="Универсальное или неопределенное имя" class="fa fa-genderless fa-fw" aria-hidden="true"></i>';
 
 	for (var t1 in src.l) {
 		if(src.l[t1].name == race){
