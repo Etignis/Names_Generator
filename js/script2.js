@@ -730,7 +730,7 @@ function getRandomelementFromString(sSource) {
   // return prefix+fixName(word, src)+postfix;
 // }
 function make_name2(src, race, subrace) {
-	var name = '', sSex='<i title="Универсальное имя" class="fa fa-genderless fa-fw" aria-hidden="true"></i>';
+	var name = '', sSex='<i title="Универсальное или неопределенное имя" class="fa fa-genderless fa-fw" aria-hidden="true"></i>';
 
 	for (var t1 in src.l) {
 		if(src.l[t1].name == race){
@@ -822,9 +822,9 @@ function setConfig(prop, val) {
 function getConfig(prop) {
 	oConfig = JSON.parse(localStorage.getItem(sConfigName)) || {};
 	if(prop!=undefined) {
-		return localStorage.getItem(sConfigName)? oConfig[prop] : {};
+		return localStorage.getItem(sConfigName)? oConfig[prop] : [];
 	}
-	return oConfig;
+	return false;
 }
 function addNameLog(oParams) {
 	if(aNameLog.length>20) {
@@ -833,26 +833,28 @@ function addNameLog(oParams) {
 	aNameLog.unshift(oParams);
 }
 function removeNameLog(i){
-	aNameLog.splice(i,1);
+	aNameLog.splice(--i,1);
 }
 function updateNameLog() {
 	var aNames = [];
-	setConfig("aNameLog", aNameLog);
-	aNameLog.forEach(function(oName) {
-		aNames.push("<tr><td>"+oName.sex+"</td><td>"+oName.name+"</td><td><button class='remove_name'>[-]</button></td></tr>");
-	});	
+
 	if($("#nameLog").length) {
 		$("#nameLog").remove();
 	}
-	if(aNames.length==0) {
+	setConfig("aNameLog", aNameLog);
+	if(aNameLog.length<1) {
 		return;
 	}
-	var oLog = "<table align='center' id='nameLog'><tr><td colspan='3'><small>Сохраненные имена</small></td></tr>"+aNames.join("")+"<tr><td colspan='3'><small>"+aNames.length+"/20</small><br><button class='clear_name'>Удалить все</button></td></tr></table>";
-
+	aNameLog.forEach(function(oName) {
+		aNames.push("<tr><td>"+oName.sex+"</td><td>"+oName.name+"</td><td><button class='remove_name simple_button'><i title='Удалить' class='fa fa-times' aria-hidden='true'></i></button></td></tr>");
+	});
+	
+	var oLog = "<table align='center' id='nameLog'><tr><td colspan='3'><small>Сохраненные имена</small></td></tr>"+aNames.join("")+"<tr><td colspan='3'><small>"+aNames.length+"/20</small> | <button class='clear_name simple_button'>Очистить список</button></td></tr></table>";
+	
 	$("#result").append(oLog);
 }
 function loadNameLog() {
-	aNameLog = getConfig("aNameLog");
+	aNameLog = getConfig("aNameLog") || [];
 }
 
 $("body").on('click', ".combo_box_title, .combo_box_arrow", function(){
@@ -912,7 +914,7 @@ $("body").on('click', "#go", function(){
   var number = 5;
   var table = "";
   var listName = $("#nameListSelect .label").attr("data-selected-key");//$("#listSelect option:selected").attr("data-key");
-  var bSave = "<button class='save_name'>[S]</button>";
+  var bSave = "<button class='save_name simple_button'><i title='Сохранить' class='fa fa-save' aria-hidden='true'></i></button>";
   
   for(var n in names_line) {
     var race = names_line[n].trim().split(" ");
