@@ -1758,6 +1758,44 @@
 				}
 			]
 		},
+		pirate: {
+			title: "Пиратские имена",
+			visible: false,
+			"l": [
+				{
+					"name": "pirate",
+					"title": "Пиратские имена",
+					"list": [          
+						{
+							"name": "pirate",
+							"title": "Пиратские имена",
+							"schemes": [
+								"male male_nic",
+								"female femail_nic"
+							],
+							"src": [
+								{
+									"name": "male",
+									"l": ""
+								},
+								{
+									"name": "female",
+									"l": ""
+								},              
+								{
+									"name": "male_nic",
+									"l": ""
+								},
+								{
+									"name": "femail_nic",
+									"l": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		},
 
 	};
 	
