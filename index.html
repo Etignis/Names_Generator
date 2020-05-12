@@ -29,7 +29,7 @@
 </head>
 
 <body>
-<div id='app'>
+<div id='app' v-on:keyup.enter="generate">
 	<div id="panel" v-cloak>
 		<a :href="sHomeLink" class="bt"><i class="fa fa-home"></i></a>
 		<a class="bt" id="go" title="Выберите расу" :disabled="disable_random" @click="generate">Сгенерировать</a>
