@@ -2120,7 +2120,7 @@
 		return aElements[randd(0, nMax)];
 	}
 	
-	function make_name2(src, race, subrace) {
+	function make_name2(src, race, subrace, sex) {
 		var name = '', sSex='any';//'<i title="Универсальное или неопределенное имя" class="fa fa-genderless fa-fw" aria-hidden="true"></i>';
 
 		for (var t1 in src.l) {
@@ -2131,7 +2131,11 @@
 
 						// multiply schemes if need
 						var schemes = [];
-						cur.schemes.forEach(function(el) {
+						var aFilteredSchemes = (sex =='male' || sex=='female') ? 
+							cur.schemes.filter(el=>new RegExp(`\\b${sex}\\b`, 'i').test(el)) 
+							: 
+							cur.schemes;
+						aFilteredSchemes.forEach(function(el) {
 							let oSchema = {};
 							if(typeof el == 'string') {
 								oSchema.template = el
@@ -2211,13 +2215,13 @@
 	/**
 	* Get many names of one lyst, but different rases
 	*/
-	function _getManyFromList(sListName, aPaths, nCount=5){
+	function _getManyFromList(sListName, aPaths, nCount=5, sSex='any'){
 		let aList = [];
 		
 		for(var n in aPaths) {
 			var sRace = aPaths[n].trim().split("/");
 			for(var r=0; r<nCount; r++) {
-				let oName = make_name2(name_groups[sListName], sRace[0], sRace[1]);
+				let oName = make_name2(name_groups[sListName], sRace[0], sRace[1], sSex);
 				if(oName){
 					aList.push(oName);
 				}
