@@ -1829,6 +1829,7 @@
 		tftl: {
 			title: "Tales from the Loop",
 			visible: true,
+			extra: "А еще по Tales from the Loop у нас есть <a href='https://tentaculus.ru/tftl_hook_generator/'>генератор зацепок</a> для приключений",
 			"l": [
 				{
 					"name": "sweden",
@@ -2343,6 +2344,40 @@
 		return oData;
 	}
 	
+	function _getExtraByPath(list, rase, subrace){
+		let aList = [];
+		if(list.extra) {
+			aList.push(list.extra);
+		}
+		if(rase) {
+			let oRace = list.l.find(el=>el.name == rase);
+			if(oRace && oRace.extra) {
+				aList.push(oRace.extra);
+			}
+			if(subrace) {
+				let oSubrace = oRace.list.find(el=>el.name == subrace);
+				if(oSubrace && oSubrace.extra) {
+					aList.push(oSubrace.extra);
+				}				
+			}
+		}
+		return aList;
+	}	
+	/**
+	* Get extra information (if exists)
+	*/
+	function _getExtraFromList(sListName, aPaths){
+		let aList = [];
+		for(var n in aPaths) {
+			var sRace = aPaths[n].trim().split("/");
+			let sExtra = _getExtraByPath(name_groups[sListName], sRace[0], sRace[1])
+			if(sExtra){
+				aList.push(sExtra);
+			}
+		}
+		return aList.flat();
+	}
+	
 	function _getStructure(){
 		let aStructure = [];
 		
@@ -2448,6 +2483,8 @@
 		_Lib.getByPath = _getByPath;
 		_Lib.getManyByPath = _getManyByPath;
 		_Lib.getManyFromList = _getManyFromList;
+		
+		_Lib.getExtraFromList = _getExtraFromList;
 		
 		_Lib.addCustom = _addCustom;
 
