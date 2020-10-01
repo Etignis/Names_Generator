@@ -2375,7 +2375,7 @@
 				aList.push(sExtra);
 			}
 		}
-		return aList.flat();
+		return [... new Set(aList.flat())];
 	}
 	
 	function _getStructure(){
