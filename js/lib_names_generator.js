@@ -2226,56 +2226,58 @@
 							}
 						});
 
-						var schema = shuffle(schemes)[0];
+						if(schemes.length>0){		
+							var schema = shuffle(schemes)[0];
 
-						var name_arr = schema.template.split(/\s+/);
+							var name_arr = schema.template.split(/\s+/);
 
-						// choose variants from "var1|var2"
-						name_arr.forEach(function(el, i, arr){
-							arr[i] = shuffle(el.split("|"))[0];
-						});
+							// choose variants from "var1|var2"
+							name_arr.forEach(function(el, i, arr){
+								arr[i] = shuffle(el.split("|"))[0];
+							});
 
-						var source = cur.src;
-						for (var i in name_arr) {
-							for( var j in source) {
-								if(source[j].name==name_arr[i]) {
-									if (source[j].random? randd(0,source[j].random)==0 : 1) {
-										word = generate_word(source[j], source);
-										var re_match;
-										for ( var m=5;
-												m>0 &&
-												word.length<3 ||
-												word.length<4 &&
-												/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]\1/i.test(word) ||
-												word.length>3 &&
-												/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]\1\1/i.test(word) ||
-												(re_match = word.match(/[УЕЫАОЭЯИЮЯ]/gi) &&
-												re_match &&
-												word.match(/[УЕЫАОЭЯИЮЯ]/gi).length<2);
-												m--
-											){
+							var source = cur.src;
+							for (var i in name_arr) {
+								for( var j in source) {
+									if(source[j].name==name_arr[i]) {
+										if (source[j].random? randd(0,source[j].random)==0 : 1) {
 											word = generate_word(source[j], source);
+											var re_match;
+											for ( var m=5;
+													m>0 &&
+													word.length<3 ||
+													word.length<4 &&
+													/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]\1/i.test(word) ||
+													word.length>3 &&
+													/[БВГДЖЗКЛМНПРСТФХЦЧЩШЪЬ]\1\1/i.test(word) ||
+													(re_match = word.match(/[УЕЫАОЭЯИЮЯ]/gi) &&
+													re_match &&
+													word.match(/[УЕЫАОЭЯИЮЯ]/gi).length<2);
+													m--
+												){
+												word = generate_word(source[j], source);
+											}
+											var prefix = source[j].hasOwnProperty('prefix')? source[j].prefix : "";
+											var postfix = source[j].hasOwnProperty('postfix')? getRandomelementFromString(source[j].postfix) : " ";
+											name+= prefix+fixName(word, source[j].format)+postfix;
+											
+											if(schema.type == 'single' && name.length>1) {
+												name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+											}
+											
+											break;
 										}
-										var prefix = source[j].hasOwnProperty('prefix')? source[j].prefix : "";
-										var postfix = source[j].hasOwnProperty('postfix')? getRandomelementFromString(source[j].postfix) : " ";
-										name+= prefix+fixName(word, source[j].format)+postfix;
-										
-										if(schema.type == 'single' && name.length>1) {
-											name = name[0].toUpperCase() + name.slice(1).toLowerCase();
-										}
-										
-										break;
 									}
 								}
+								
+								switch(source[j].name){
+									case "male": sSex = 'male';break;//''<i title="Мужское имя" style="font-size: 80%" class="fa fa-mars fa-fw" aria-hidden="true"></i>'; break;
+									case "female": sSex = 'female';break;//'<i title="Женское имя" class="fa fa-venus fa-fw" aria-hidden="true"></i>'; break;
+								}
 							}
-							
-							switch(source[j].name){
-								case "male": sSex = 'male';break;//''<i title="Мужское имя" style="font-size: 80%" class="fa fa-mars fa-fw" aria-hidden="true"></i>'; break;
-								case "female": sSex = 'female';break;//'<i title="Женское имя" class="fa fa-venus fa-fw" aria-hidden="true"></i>'; break;
-							}
-						}
 
-						break;
+							break;
+						}
 					}
 				}
 				break;
