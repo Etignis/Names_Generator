@@ -2395,14 +2395,31 @@
 			if(name_groups[sListName].l) {
 				name_groups[sListName].l.forEach(function(oRace){
 					let oSubNode = {};
+					let aSex = [];
+					if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name='male')) {
+						aSex.push('male');
+					}
+					if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name='female')) {
+						aSex.push('female');
+					}
+							
 					oSubNode.key = oRace.name;
 					oSubNode.title = oRace.title;
+					oSubNode.sex = aSex;
 					
 					if(oRace.list) {
 						oRace.list.forEach(function(oSubrase){
 							let oSubSubNode = {};
+							let aSex = [];
+							if(oSubrase.src && oSubrase.src.find(el=>el.name='male')) {
+								aSex.push('male');
+							}
+							if(oSubrase.src && oSubrase.src.find(el=>el.name='female')) {
+								aSex.push('female');
+							}
 							oSubSubNode.key = oSubrase.name;
 							oSubSubNode.title = oSubrase.title;
+							oSubSubNode.sex = aSex;
 							
 							if(!oSubNode.sub) {
 								oSubNode.sub = [];
