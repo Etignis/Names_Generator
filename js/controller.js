@@ -167,13 +167,13 @@ Vue.component('combo_section', {
 			<div>
 				<input :checked="sectionChecked"  type="checkbox" :value="race.key">
 				<label data-hierarchy="root"  @click="race_click(race.key)">
-					{{race.title}} 
+					{{race.title}} <span v-html="race.sex"></span>
 				</label>
 				<ul :style="style" class='sectionList'>
 					<li v-for="subrace in race.sub">
 						<input type="checkbox" :checked="sub_selected.includes(subrace.key)" :value="subrace.key" :id='"ch_"+subrace.key' >
 						<label data-hierarchy="child" @click="subrace_click(race.key, subrace.key)">
-							 {{subrace.title}}
+							 {{subrace.title}} <span v-html="subrace.sex"></span>
 						</label>
 					</li>
 				</ul>

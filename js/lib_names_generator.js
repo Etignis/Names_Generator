@@ -758,7 +758,9 @@
 							"title": "Горные эльфы",
 							"schemes": [
 								"male prefix postfix",
-								"male surname"
+								"male surname",
+								"female prefix postfix",
+								"female surname"
 							],
 							"src": [
 							{
@@ -2396,30 +2398,30 @@
 				name_groups[sListName].l.forEach(function(oRace){
 					let oSubNode = {};
 					let aSex = [];
-					if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name='male')) {
-						aSex.push('male');
-					}
-					if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name='female')) {
-						aSex.push('female');
-					}
+					// if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name=='male')) {
+						// aSex.push('<i title="Мужское имя" style="font-size: 80%" class="fa fa-mars fa-fw" aria-hidden="true"></i>');
+					// }
+					// if(oRace.list.length==1 && oRace.list[0].src.find(el=>el.name=='female')) {
+						// aSex.push('<i title="Женское имя" class="fa fa-venus fa-fw" aria-hidden="true"></i>');
+					// }
 							
 					oSubNode.key = oRace.name;
 					oSubNode.title = oRace.title;
-					oSubNode.sex = aSex;
+					oSubNode.sex = aSex.join(' ');
 					
 					if(oRace.list) {
 						oRace.list.forEach(function(oSubrase){
 							let oSubSubNode = {};
 							let aSex = [];
-							if(oSubrase.src && oSubrase.src.find(el=>el.name='male')) {
-								aSex.push('male');
-							}
-							if(oSubrase.src && oSubrase.src.find(el=>el.name='female')) {
-								aSex.push('female');
-							}
+							// if(oSubrase.src && oSubrase.src.find(el=>el.name=='male')) {
+								// aSex.push('<i title="Мужское имя" style="font-size: 80%" class="fa fa-mars fa-fw" aria-hidden="true"></i>');
+							// }
+							// if(oSubrase.src && oSubrase.src.find(el=>el.name=='female')) {
+								// aSex.push('<i title="Женское имя" class="fa fa-venus fa-fw" aria-hidden="true"></i>');
+							// }
 							oSubSubNode.key = oSubrase.name;
 							oSubSubNode.title = oSubrase.title;
-							oSubSubNode.sex = aSex;
+							oSubSubNode.sex = aSex.join(' ');
 							
 							if(!oSubNode.sub) {
 								oSubNode.sub = [];
